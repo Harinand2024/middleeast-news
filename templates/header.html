@@ -1,0 +1,992 @@
+{% load i18n %}
+{% load static %}
+
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<style>
+  /* 🌐 middleeast HEADER + SIDEBAR */
+  :root {
+    --dxb-bg: #ffffff;
+    --dxb-text: #000000;
+    --dxb-border: #e6e6e6;
+    --dxb-hover: #f7f7f7;
+  }
+
+  body.dark-mode {
+    --dxb-bg: #121212;
+    --dxb-text: #f5f5f5;
+    --dxb-border: #2a2a2a;
+    --dxb-hover: #1e1e1e;
+    background: var(--dxb-bg);
+    color: var(--dxb-text);
+  }
+  .glossy-btn {
+  display: inline-block;
+  padding: 5px 14px;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+
+  background: linear-gradient(135deg, #f76a7a, #cc1227);
+  
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.15),
+    inset 0 2px 4px rgba(255, 255, 255, 0.3);
+
+  transition: all 0.3s ease;
+}
+
+/* glossy shine effect */
+.glossy-btn::before {
+  content: "";
+  position: absolute;
+  top: -40%;
+  left: -20%;
+  width: 140%;
+  height: 180%;
+  background: linear-gradient(
+    120deg,
+    rgba(255,255,255,0.4) 0%,
+    rgba(255,255,255,0.1) 40%,
+    rgba(255,255,255,0) 70%
+  );
+  transform: rotate(25deg);
+  transition: all 0.5s ease;
+}
+
+.glossy-btn:hover::before {
+  left: 100%;
+}
+
+.glossy-btn:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 18px 35px rgba(0, 0, 0, 0.35),
+    inset 0 2px 4px rgba(255, 255, 255, 0.4);
+}
+
+.card-bg-dark {
+    background: var(--dxb-bg) !important;
+    padding: 10px;
+}
+.card-bg-dark i{opacity: 0.5;}
+
+.small{
+    font-size:12px;
+   
+}
+  /* HEADER */
+  .middleeast-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    top: 0;
+    z-index: 1050;
+    transition: background 0.3s ease;
+    padding: 6px 0px;
+    
+  }
+
+  .middleeast-header .search-box {
+    flex: 1 1 300px;
+    margin: 10px 20px;
+    position: relative;
+  }
+
+  .middleeast-header .search-box input {
+    width: 100%;
+    padding: 8px 35px;
+    border-radius: 20px;
+    border: 1px solid var(--dxb-border);
+    background: var(--dxb-bg);
+    color: var(--dxb-text);
+  }
+
+  .middleeast-header .search-box i {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    color: #777;
+  }
+ .suggestion-item {
+    padding: 10px 15px;
+    cursor: pointer;
+  }
+  .suggestion-item:hover {
+    background-color: #f8f9fa;
+  }
+  .recent-header {
+    font-size: 13px;
+    color: #777;
+    padding: 5px 15px 0;
+    text-transform: uppercase;
+  }
+  /* TOP NAVIGATION */
+  .middleeast-topnav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    justify-content: start;
+    width: 100%;
+    padding: 8px 0 ;
+    margin-top: 6px;
+  }
+
+  .middleeast-topnav > .middleeast-dropdown {
+    position: relative;
+  }
+
+  .middleeast-topnav a {
+    color: var(--dxb-text);
+    text-decoration: none;
+    padding: 6px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+  }
+
+  .middleeast-topnav a:hover {
+    background: var(--dxb-hover);
+    color: #cc1227 ;
+  }
+
+  /* CUSTOM DROPDOWN MENU */
+  .middleeast-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: var(--dxb-bg);
+    border: 1px solid var(--dxb-border);
+    border-radius: 10px;
+    min-width: 180px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1100;
+  }
+
+  .middleeast-dropdown-menu a {
+    display: block;
+    padding: 8px 15px;
+    color: var(--dxb-text);
+    text-decoration: none;
+    border-radius: 0;
+  }
+
+  .middleeast-dropdown-menu a:hover {
+    background: var(--dxb-hover);
+    color: #cc1227 ;
+  }
+
+  .middleeast-dropdown.show .middleeast-dropdown-menu {
+    display: block;
+  }
+
+  /* SIDEBAR */
+  .middleeast-sidebar {
+    position: fixed;
+    top: 0;
+    left: -280px;
+    width: 280px;
+    height: 100%;
+    background: var(--dxb-bg);
+    border-right: 1px solid var(--dxb-border);
+    transition: left 0.3s ease;
+    padding: 20px;
+    z-index: 1200;
+    overflow-y: auto;
+  }
+
+  .middleeast-sidebar.active {
+    left: 0;
+  }
+
+  .middleeast-sidebar .nav-link {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    color: var(--dxb-text);
+    border-radius: 8px;
+  }
+
+  .middleeast-sidebar .submenu {
+    padding-left: 0;
+    list-style: none;
+  }
+
+  .middleeast-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    display: none;
+    z-index: 1150;
+  }
+
+  .middleeast-overlay.active {
+    display: block;
+  }
+
+  /* Dark Mode Toggle */
+  .middleeast-toggle {
+    border: 1px solid var(--dxb-border);
+    border-radius: 20px;
+    padding: 4px 12px;
+    cursor: pointer;
+    background: transparent;
+    color: var(--dxb-text);
+  }
+.language-button-wrapper {
+        position: relative;
+        display: inline-block;
+        border-radius: 5px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        overflow: hidden;
+        margin:10px;
+    }
+    #google_translate_element {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+    }
+
+     #google_translate_element_sticky{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+    }
+
+    #google_translate_element select {
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+    }
+     #google_translate_element_sticky select {
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+    } 
+  .language-button-wrapper img {
+    height: 16px;
+    width: 16px;
+    color:white !important;
+   }
+
+
+  /* Hide ANY Google Translate banner iframe */
+
+  .goog-te-banner-frame.skiptranslate {
+      display: none !important;
+  } 
+
+  body {
+      top: 0px !important;  /* reset body position */
+  }
+  /* Style the dropdown container */
+.goog-te-combo {
+  background-color: #ddd !important;
+  color: white !important;
+  border: 1px solid #444 !important;
+  padding: 16px 0px !important;
+  border-radius: 6px;
+  font-family: Arial, sans-serif;
+  width: 100% !important;
+  margin: 0px !important;
+}
+
+/* Optional: Style the dropdown arrow */
+.goog-te-combo option {
+  background-color: black;
+  color: white;
+}
+
+.login-btn {
+    padding: 6px 15px;
+    background: #cc1227  ;
+    color: white !important;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 0 0 transparent;
+    margin: 0px;
+  }
+
+  .login-btn:hover {
+    background: #cc1227  !important;
+    color: white !important;
+    box-shadow: none !important;
+  }
+
+  /* Smooth Modal Animation */
+#ModalSearch .modal-dialog {
+  transform: translateY(-30px);
+  transition: all 0.3s ease-in-out;
+}
+#ModalSearch.show .modal-dialog {
+  transform: translateY(0);
+}
+
+/* Custom Input Styling */
+#ModalSearch .form-control::placeholder {
+  color: #999;
+  font-style: italic;
+}
+
+/* Search Icon */
+#ModalSearch .input-group-text i {
+  font-size: 1.2rem;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+  #ModalSearch .modal-dialog {
+    margin: 0 10px;
+  }
+  #ModalSearch .modal-body form {
+    max-width: 100%;
+  }
+}
+  @media (max-width: 768px) {
+    .middleeast-topnav {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      white-space: nowrap;
+      padding-bottom: 8px;
+    }
+    .middleeast-topnav a {
+      flex: 0 0 auto;
+    }
+  }
+
+
+/* Sticky glass header */
+.middleeast-header{
+  position: sticky;
+  top: 0;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--dxb-border);
+  box-shadow: 0 10px 30px rgba(0,0,0,.03);
+}
+
+/* Dark mode glass */
+body.dark-mode .middleeast-header{
+  background: rgba(18,18,18,0.85);
+  box-shadow: 0 10px 30px rgba(0,0,0,.4);
+}
+
+/* Search premium */
+.middleeast-header .search-box input{
+  height: 46px;
+  font-size: 15px;
+  border-radius: 999px;
+  padding-left: 44px;
+  transition: all .25s ease;
+}
+
+.middleeast-header .search-box input:focus{
+  border-color: #cc1227 ;
+  box-shadow: 0 0 0 4px rgba(0,120,212,.15);
+}
+
+/* Suggestions floating card */
+#suggestionsBox{
+  border-radius: 14px;
+  overflow: hidden;
+  z-index: 99;
+}
+
+/* Right icons polish */
+.middleeast-header i{
+  transition: transform .2s ease, color .2s ease;
+}
+
+.middleeast-header a:hover i{
+  transform: translateY(-2px);
+  color: #cc1227 ;
+}
+
+/* Login / action buttons */
+.login-btn,
+.middleeast-toggle{
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px !important;
+}
+
+/* ================= NAV PREMIUM ================= */
+
+
+/* Nav links */
+.middleeast-topnav a{
+  font-weight: 500;
+  position: relative;
+}
+
+/* Animated underline */
+.middleeast-topnav a::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0;
+  height: 3px;
+  background: #cc1227 ;
+  transition: .3s;
+  border-radius: 3px;
+}
+
+.middleeast-topnav a:hover::after{
+  width: 100%;
+}
+
+/* Dropdown premium */
+.middleeast-dropdown-menu{
+  animation: dropFade .25s ease;
+}
+
+@keyframes dropFade{
+  from{
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to{
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ================= SIDEBAR ================= */
+
+
+
+
+
+.social-sidebar-right {
+    position: fixed;
+    top: 50%;
+    right: -5px;
+    transform: translateY(-50%);
+    background: #2b2b2b;
+    padding: 10px 6px;
+    border-radius: 6px;
+    z-index: 9999;
+}
+
+.social-icons a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  margin: 6px 0;
+  color: #fff !important;
+  font-size: 18px !important;
+  border-radius: 50%;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+  transform: scale(1.1);
+}
+
+.me-subscribe-btn{
+  background:#cc1227  !important;
+  color:#fff !important;
+  border:none !important;
+  border-radius:999px !important;
+  padding:6px 14px !important;
+  font-size: 14px !important;
+}
+.me-subscribe-btn:hover{background:#cc1227  !important;}
+
+/* ========== RESPONSIVE FIX (ADD ONLY) ========== */
+
+/* Mobile */
+@media (max-width: 767px){
+
+  /* hide desktop search + nav */
+  .middleeast-header .search-box,
+  .middleeast-topnav{
+    display:none !important;
+  }
+
+  /* right icons clean */
+  .middleeast-header > .d-flex:last-child{
+    gap:10px;
+  }
+
+  /* social bar hide on mobile */
+  .social-sidebar-right{
+    top: 73% !important;
+    z-index: 999 !important;
+    display: none !important;
+  }
+  .logo-light, .logo-dark{
+    height:auto !important;
+    margin-left: 50px;
+  }
+}
+
+/* Tablet */
+@media (min-width:768px) and (max-width:991px){
+  .middleeast-header .search-box{
+    max-width:100%;
+  }
+}
+
+</style>
+
+<header class="middleeast-header px-3">
+  <div class="container-fluid">
+    <div class="row align-items-center">
+
+      <!-- LEFT : MENU + LOGO -->
+      <div class="col-6 col-md-auto d-flex align-items-center gap-2">
+        <button id="menuBtn" class="btn d-md-none">
+          <i class="bi bi-list fs-4"></i>
+        </button>
+
+        <a href="/" class="text-center">
+          <img src="{{ profile_setting.logo_dark.url }}" class="logo-light" style="height:50px;">
+          <img src="{{ profile_setting.logo_light.url }}" class="logo-dark" style="height:50px;">
+        </a>
+      </div>
+
+      <!-- CENTER : SEARCH (DESKTOP/TABLET) -->
+      <div class="col d-none d-md-flex justify-content-center">
+        <div class="search-box position-relative" style="max-width:700px;width:100%;">
+          <i class="bi bi-search position-absolute"
+            style="left:15px;top:50%;transform:translateY(-50%);"></i>
+
+          <form action="{% url 'search' %}" method="get">
+            <input type="text" id="searchBox" name="title"
+              class="form-control ps-5 rounded-pill"
+              placeholder="Search news, topics or categories..."
+              autocomplete="off">
+          </form>
+
+          <div id="suggestionsBox"
+            class="suggestions position-absolute w-100 card-bg-dark border rounded-3 shadow-sm d-none mt-1"></div>
+        </div>
+      </div>
+
+      <!-- RIGHT : ICONS -->
+      <div class="col-6 col-md-auto d-flex justify-content-end align-items-center gap-2">
+        <!-- Language -->
+        <div class="language-button-wrapper d-none d-md-inline-block">
+          <i class="bi bi-translate fs-5"></i>
+          <div id="google_translate_element"></div>
+        </div>
+           <!-- Search (mobile) -->
+        <button class="btn d-md-none" data-bs-toggle="modal" data-bs-target="#ModalSearch">
+          <i class="bi bi-search fs-5"></i>
+        </button>
+        <!-- Date -->
+        <span class="d-none d-md-inline-flex align-items-center small">
+          <i class="bi bi-calendar-date-fill me-1"></i>
+          <span id="currentDate"></span>
+        </span>
+
+        <!-- Subscribe -->
+        <button class="glossy-btn d-none d-md-inline-flex"
+          data-bs-toggle="modal" data-bs-target="#ModalSubscribe">
+           <i class="bi bi-bell-fill me-1"></i> Subscribe
+        </button>
+        <a class="d-md-none d-md-inline-flex"
+          data-bs-toggle="modal" data-bs-target="#ModalSubscribe">
+           <i class="bi bi-bell-fill fs-5 me-1"></i>
+        </a>
+      
+        <!-- Dark -->
+        <button id="darkToggle" class="middleeast-toggle d-none d-md-inline-flex">
+          <i class="bi bi-moon"></i> Dark
+        </button>
+      </div>
+
+    </div>
+
+  <div class="container">
+    <!-- NAV : DESKTOP ONLY -->
+    <div class="row d-none d-md-block">
+      
+      <div class="col">
+        
+        <div class="middleeast-topnav">
+          {% for link in Blogcat %}
+          <div class="middleeast-dropdown">
+            <a href="#" class="middleeast-dropdown-toggle">
+              {% trans link.cat_name %}
+            </a>
+            {% if link.sub_category_set.all %}
+            <div class="middleeast-dropdown-menu">
+              {% for sublink in link.sub_category_set.all %}
+              <a href="/{{ link.cat_slug }}/{{ sublink.subcat_slug }}">
+                {% trans sublink.subcat_name %}
+              </a>
+              {% endfor %}
+            </div>
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+</div>
+
+  </div>
+</header>
+
+  <div class="social-sidebar-right">
+        <div class="social-icons">
+          
+          {% if profile_setting.youtube %}
+          <a href="{{ profile_setting.youtube }}" target="_blank" class="youtube">
+            <i class="bi bi-youtube"></i>
+          </a>
+          {% endif %}
+
+          {% if profile_setting.instagram %}
+          <a href="{{ profile_setting.instagram }}" target="_blank" class="instagram">
+            <i class="bi bi-instagram"></i>
+          </a>
+          {% endif %}
+
+          {% if profile_setting.facbook %}
+          <a href="{{ profile_setting.facbook }}" target="_blank" class="facebook">
+            <i class="bi bi-facebook"></i>
+          </a>
+          {% endif %}
+
+          {% if profile_setting.twitter %}
+          <a href="{{ profile_setting.twitter }}" target="_blank" class="twitter">
+            <i class="bi bi-twitter-x"></i>
+          </a>
+          {% endif %}
+
+          {% if profile_setting.linkedin %}
+          <a href="{{ profile_setting.linkedin }}" target="_blank" class="linkedin">
+            <i class="bi bi-linkedin"></i>
+          </a>
+          {% endif %}
+
+        </div>
+      </div>
+ {% include 'subscribe_model.html' %}
+<!-- SIDEBAR -->
+<div class="middleeast-sidebar" id="sidebar">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <div class="d-flex align-items-center">
+     <a href="/" class="d-inline-block">
+        <img src="{{ profile_setting.logo_dark.url }}" alt="Dark Logo" class="logo-light" style="max-height:36px;">
+        <img src="{{ profile_setting.logo_light.url }}" alt="Light Logo" class="logo-dark" style="max-height:36px;">
+      </a>
+    </div>
+    <button class="btn btn-light btn-sm" id="closeSidebar"><i class="bi bi-x-lg"></i></button>
+  </div>
+
+    <!-- ✅ middleeast SIDEBAR MENU -->
+    <ul class="nav flex-column" id="middleeastSidebarMenu">
+
+      {% for link in Blogcat %}
+      <li class="border-bottom mb-1 pb-1">
+        <a href="#"
+          class="nav-link dropdown-toggle"
+          data-bs-toggle="collapse"
+          data-bs-target="#menu{{ forloop.counter }}"
+          aria-expanded="false">
+          {{ link.cat_name }}
+        </a>
+
+        {% if link.sub_category_set.all %}
+        <ul class="submenu collapse" id="menu{{ forloop.counter }}" data-bs-parent="#middleeastSidebarMenu">
+          {% for sublink in link.sub_category_set.all|dictsort:"subcat_status" %}
+            {% if sublink.subcat_status == 'active' %}
+            <li>
+              <a href="/{{ link.cat_slug }}/{{ sublink.subcat_slug }}" class="nav-link">
+                {{ sublink.subcat_name }}
+              </a>
+            </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </li>
+      {% endfor %}
+
+    </ul>
+
+
+</div>
+<!-- 🔍 Search Modal -->
+<div class="modal fade" id="ModalSearch" tabindex="-1" aria-labelledby="ModalSearchLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content border-0 shadow-lg rounded-4">
+
+      <!-- Header -->
+      <div class="modal-header border-0 pb-0 px-4 pt-4">
+        <h5 class="modal-title fw-semibold " id="ModalSearchLabel">Search</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+          style="width: 40px; height: 40px; background-color: transparent; border: none;">
+        </button>
+      </div>
+
+      <!-- Body -->
+      <div class="modal-body px-4 pb-4 pt-3">
+
+        <form action="{% url 'search' %}" method="get" class="mx-auto" style="max-width: 600px;">
+          <div class="input-group input-group-lg border rounded-pill shadow-sm overflow-hidden">
+            <span class="input-group-text card-bg-dark border-0 ps-4">
+              <i class="bi bi-search text-secondary"></i>
+            </span>
+            <input type="text" name="title" class="form-control border-0 shadow-none"
+              placeholder="Search for posts, topics or categories..." required>
+          </div>
+
+          <button type="submit"
+            class="btn w-100 mt-4 py-2 rounded-pill fw-semibold text-white"
+            style="background-color: #cc1227  ; border: none; font-size: 16px;">
+            Search
+          </button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="middleeast-overlay" id="overlay"></div>
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+<!-- Load Google Translate API -->
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<script>
+    window.addEventListener("scroll", function () {
+        var stickyNav = document.getElementById("stickyNav");
+        if (window.pageYOffset > 100) {
+            stickyNav.style.display = "block";
+        } else {
+            stickyNav.style.display = "none";
+        }
+    });
+
+    const getFormattedDate = () => {
+        const options = { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' };
+        const today = new Date();
+        return today.toLocaleDateString('en-US', options);
+    };
+    document.getElementById('currentDate').innerText = getFormattedDate();
+</script>
+<script>
+  const menuBtn = document.getElementById("menuBtn");
+  const sidebar = document.getElementById("sidebar");
+  const overlay = document.getElementById("overlay");
+  const closeSidebar = document.getElementById("closeSidebar");
+  const darkToggle = document.getElementById("darkToggle");
+
+  // Sidebar toggle
+  menuBtn.addEventListener("click", () => {
+    sidebar.classList.add("active");
+    overlay.classList.add("active");
+  });
+
+  closeSidebar.addEventListener("click", () => {
+    sidebar.classList.remove("active");
+    overlay.classList.remove("active");
+  });
+
+  overlay.addEventListener("click", () => {
+    sidebar.classList.remove("active");
+    overlay.classList.remove("active");
+  });
+
+  // Dark mode toggle
+  darkToggle.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+    darkToggle.innerHTML = document.body.classList.contains("dark-mode")
+      ? '<i class="bi bi-sun"></i> Light'
+      : '<i class="bi bi-moon"></i> Dark';
+  });
+
+  // ✅ Main Menu Dropdown Logic (Click toggle with auto-close)
+document.querySelectorAll('.middleeast-dropdown-toggle').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const parent = btn.parentElement;
+
+    // Close all other open dropdowns first
+    document.querySelectorAll('.middleeast-dropdown.show').forEach(drop => {
+      if (drop !== parent) drop.classList.remove('show');
+    });
+
+    // Toggle current dropdown
+    parent.classList.toggle('show');
+  });
+});
+
+// Close dropdown if clicked outside
+document.addEventListener('click', () => {
+  document.querySelectorAll('.middleeast-dropdown.show').forEach(drop => drop.classList.remove('show'));
+});
+
+document.querySelectorAll('.middleeast-sidebar .dropdown-toggle').forEach(toggle => {
+    toggle.addEventListener('click', function (e) {
+      const target = document.querySelector(this.dataset.bsTarget);
+
+      // Close all other open submenus
+      document.querySelectorAll('.middleeast-sidebar .submenu.show').forEach(menu => {
+        if (menu !== target) {
+          const collapse = bootstrap.Collapse.getInstance(menu);
+          if (collapse) collapse.hide();
+        }
+      });
+    });
+  });
+</script>
+<script>
+  function applyCustomTranslateStyles() {
+  const combo = document.querySelector('.goog-te-combo');
+  if (combo) {
+    combo.style.backgroundColor = 'black';
+    combo.style.color = 'white';
+    combo.style.border = '1px solid #444';
+    combo.style.padding = '16px';
+    combo.style.borderRadius = '6px';
+  }
+}
+
+// Wait for the widget to load
+setTimeout(applyCustomTranslateStyles, 1000);
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'en',
+      includedLanguages: 'en,hi,pa',
+      layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL,
+      autoDisplay: false
+    }, 'google_translate_element');
+  }
+
+  function hideTranslateBanner() {
+    const elements = document.querySelectorAll(".VIpgJd-ZVi9od-ORHb-OEVmcd.skiptranslate");
+    elements.forEach(el => {
+      el.style.display = "none";
+    });
+  }
+
+  // Run once on load
+  hideTranslateBanner();
+
+  // Watch for future changes (Google injects banner after load)
+  const observer = new MutationObserver(hideTranslateBanner);
+  observer.observe(document.body, { childList: true, subtree: true });
+</script>
+
+<script>
+  const searchBox = document.getElementById('searchBox');
+  const suggestionsBox = document.getElementById('suggestionsBox');
+
+  // Load from localStorage
+  function getRecentSearches() {
+    return JSON.parse(localStorage.getItem('recentSearches') || '[]');
+  }
+
+  function saveRecentSearch(query) {
+    if (!query) return;
+    let recents = getRecentSearches().filter(item => item.toLowerCase() !== query.toLowerCase());
+    recents.unshift(query);
+    if (recents.length > 5) recents = recents.slice(0, 5); // keep only 5 latest
+    localStorage.setItem('recentSearches', JSON.stringify(recents));
+  }
+
+  function showRecentSearches() {
+    const recents = getRecentSearches();
+    if (recents.length > 0) {
+      suggestionsBox.innerHTML = `
+        <div class="recent-header">Recent Searches</div>
+        ${recents.map(item => `<div class="suggestion-item" data-title="${item}">${item}
+        </div>`).join('')}
+      `;
+      suggestionsBox.classList.remove('d-none');
+    }
+  }
+
+  // When focused, show recent searches
+  searchBox.addEventListener('focus', showRecentSearches);
+
+  // Live suggestions (AJAX)
+  searchBox.addEventListener('input', () => {
+    const query = searchBox.value.trim();
+    if (query.length < 2) {
+      showRecentSearches();
+      return;
+    }
+
+    fetch(`/search-suggestions/?q=${encodeURIComponent(query)}`)
+      .then(response => response.json())
+      .then(data => {
+        const suggestions = data.suggestions || [];
+        if (suggestions.length > 0) {
+          suggestionsBox.innerHTML = suggestions
+            .map(item => `<div class="suggestion-item" data-title="${item.title}">
+              <i class="bi bi-search text-muted me-2"></i>${item.title}
+            </div>`)
+            .join('');
+          suggestionsBox.classList.remove('d-none');
+        } else {
+          suggestionsBox.classList.add('d-none');
+        }
+      });
+  });
+
+  // Hide when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.search-box')) suggestionsBox.classList.add('d-none');
+  });
+
+  // Click suggestion or recent → go to search page
+  suggestionsBox.addEventListener('click', (e) => {
+    const item = e.target.closest('.suggestion-item');
+    if (item) {
+      const title = item.getAttribute('data-title');
+      saveRecentSearch(title);
+      window.location.href = `{% url 'search' %}?title=${encodeURIComponent(title)}`;
+    }
+  });
+
+  // Press Enter → go to search + save
+  searchBox.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const query = searchBox.value.trim();
+      if (query) {
+        saveRecentSearch(query);
+        window.location.href = `{% url 'search' %}?title=${encodeURIComponent(query)}`;
+      }
+    }
+  });
+</script>

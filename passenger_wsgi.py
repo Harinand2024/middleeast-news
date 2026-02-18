@@ -1,0 +1,1 @@
+from middleeastbulletin.wsgi import application

@@ -1,0 +1,696 @@
+{% load image_filters %}
+<div class="container mb-3">
+  <!-- <h1 class="main-heading">Middle East News, World Updates & Daily Top Headlines</h1> -->
+   <div class="breaking-flash">
+      <span class="breaking-label">BREAKING</span>
+      <h1 class="breaking-text">
+        Middle East News, World Updates & Daily Top Headlines
+      </h1>
+    </div>
+
+  <div class="row">
+    <!-- ================= LEFT SECTION (col-9): News Content ================= -->
+    <div class="col-lg-9 col-md-12">
+
+      <!-- 🌐 Slider + Two Ads Row -->
+        <div class="row">
+          <!-- 📰 Slider -->
+          <div class="col-lg-6 col-md-12 mb-3">
+            <section class="latest-slider">
+              <div id="latestNewsCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="4000">
+
+                <!-- Indicators -->
+                <div class="carousel-indicators">
+                  {% for news in LatestNews %}
+                  <button type="button" data-bs-target="#latestNewsCarousel" data-bs-slide-to="{{ forloop.counter0 }}"
+                    class="{% if forloop.first %}active{% endif %}"></button>
+                  {% endfor %}
+                </div>
+
+                <!-- Slides -->
+                <div class="carousel-inner rounded-4 overflow-hidden card-bg-dark shadow-sm">
+                  {% for news in LatestNews %}
+                  <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                    <div class="ratio ratio-16x9">
+                      {% if news.video_file %}
+                        <a href="/{{ news.slug }}">
+                          <video class="w-100 h-100 object-fit-cover" preload="none" loop playsinline autoplay muted>
+                            <source src="{{ news.video_file.url }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                          </video>
+                        </a>
+                      {% else %}
+                        <a href="/{{ news.slug }}">
+                          <img src="{{ news.post_image.url }}" alt="{{ news.post_title }}" class="img-fluid w-100 h-100 object-fit-cover" loading="lazy">
+                        </a>
+                      {% endif %}
+                    </div>
+
+                    <div class="latest-slide-overlay d-flex flex-column justify-content-end p-4">
+                      <div class="d-flex align-items-center mb-2">
+                        <span class="badge me-2" style="background: #cc1227 ;">Latest</span>
+                        <span class="text-light small">{{ news.post_date }}</span>
+                      </div>
+                      <h5 class="text-white fw-semibold mb-4 text-truncate-2">
+                        <a href="/{{ news.slug }}" class="text-white text-decoration-none text-left">
+                          {{ news.post_title|truncatechars:180 }}
+                        </a>
+                      </h5>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+
+                <!-- Controls -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#latestNewsCarousel" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon bg-dark rounded-circle p-3"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#latestNewsCarousel" data-bs-slide="next">
+                  <span class="carousel-control-next-icon bg-dark rounded-circle p-3"></span>
+                </button>
+
+              </div>
+            </section>
+          </div>
+          <!-- 📰 2 Latest News Beside Slider -->
+            <div class="col-lg-6 col-md-12">
+              <div class="row">
+
+                <!-- News 1 -->
+                <div class="col-md-6 mb-3">
+                  {% for news in LatestNews|slice:"0:1" %}
+                  <div class="card-bg-dark shadow-sm  rounded h-100">
+                    <a href="/{{ news.slug }}">
+                      <img src="{{ news.post_image.url }}" alt="{{ news.post_title }}" class="img-fluid news-thumb" loading="lazy" >
+                    </a>
+                    <div class="pt-2">
+                      <a href="/{{ news.slug }}" class="text-decoration-none">
+                        <div class="fw-semibold small hover-title text-left">{{ news.post_title|truncatechars:150 }}</div>
+                      </a>
+                      <div class="mt-2 d-flex align-items-center">
+                        <span style="font-size: 14px;">{{ news.schedule_date }}</span>
+                        <div class="mx-2">
+                          {% include 'share.html' with posts=news %}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+
+                <!-- News 2 -->
+                <div class="col-md-6 mb-3">
+                  {% for news in LatestNews|slice:"1:2" %}
+                  <div class="card-bg-dark shadow-sm  rounded h-100">
+                    <a href="/{{ news.slug }}">
+                      <img src="{{ news.post_image.url }}" alt="{{ news.post_title }}" class="img-fluid news-thumb" loading="lazy" >
+                    </a>
+                    <div class="pt-2">
+                      <a href="/{{ news.slug }}" class="text-decoration-none">
+                        <div class="fw-semibold small hover-title">{{ news.post_title|truncatechars:140 }}</div>
+                      </a>
+                      <div class="mt-2 d-flex align-items-center">
+                        <span style="font-size: 14px;">{{ news.schedule_date }}</span>
+                        <div class="mx-2">
+                          {% include 'share.html' with posts=news %}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+
+              </div>
+            </div>
+        </div>
+         <!-- 🌟 Top Stories + 2 More News -->
+      <div class="row">
+        <!-- Top Stories -->
+        <div class="col-lg-4 col-md-6 mb-3">
+          <div class="card-bg-dark shadow-sm  rounded top-stories-widget h-100">
+            <div class="card-header border-0 d-flex align-items-center p-1">
+              
+              <h6 class="mb-0 fw-bold text-danger">BREAKING</h6>
+            </div>
+            <div class="">
+              {% for news in bnews|slice:"0:3" %}
+              <div class="d-flex align-items-center mb-3 story-item">
+                <a href="/{{ news.slug }}" class="me-2">
+                  <img src="{{ news.post_image.url }}" alt="{{ news.post_title }}" class="rounded story-img" loading="lazy">
+                </a>
+                <div class="flex-grow-1">
+                  <a href="/{{ news.slug }}" class="text-decoration-none">
+                    <div class="fw-semibold hover-title">{{ news.post_title|truncatechars:40 }}</div>
+                  </a>
+                  <div class=" small mt-1 d-flex align-items-center">
+                    <span class="">{{ news.schedule_date }}</span>
+                    <div class="mx-2" style="--custom-bottom: 0px; --custom-right: 0px;">
+                    {% include 'share.html' with posts=news %}
+                  </div>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+
+        <!-- Two More News -->
+        <div class="col-lg-8 col-md-6">
+          <div class="row">
+            <!-- News 3 -->
+            <div class="col-md-6 mb-3">
+              {% for news in trendpost|slice:"3:4" %}
+              <div class="card-bg-dark shadow-sm  rounded h-100">
+                <a href="/{{ news.slug }}">
+                  <img src="{{ news.post_image.url }}" alt="{{ news.post_title }}" class=" img-fluid" loading="lazy">
+                </a>
+                 <div class="py-3">
+                  <a href="/{{ news.slug }}" class="text-decoration-none">
+                    <div class="fw-semibold small hover-title">{{ news.post_title|truncatechars:60 }}</div>
+                  </a>
+                  <div class="small mt-2 d-flex align-items-center">
+                    <span class="">{{ news.schedule_date }}</span>
+                    <div class="mx-2" style="--custom-bottom: 0px; --custom-right: 0px;">
+                    {% include 'share.html' with posts=news %}
+                  </div>
+                  </div>
+                  
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+
+            <!-- News 4 -->
+            <div class="col-md-6 mb-3">
+              {% for news in trendpost|slice:"4:5" %}
+              <div class="card-bg-dark shadow-sm  rounded h-100">
+                <a href="/{{ news.slug }}">
+                  <img src="{{ news.post_image.url }}" alt="{{ news.post_title }}" class=" img-fluid" loading="lazy">
+                </a>
+                <div class="py-3">
+                  <a href="/{{ news.slug }}" class="text-decoration-none">
+                    <div class="fw-semibold small hover-title">{{ news.post_title|truncatechars:60 }}</div>
+                  </a>
+                  <div class="small mt-2 d-flex align-items-center">
+                    <span class="">{{ news.schedule_date }}</span>
+                    <div class="mx-2" style="--custom-bottom: 0px; --custom-right: 0px;">
+                    {% include 'share.html' with posts=news %}
+                  </div>
+                  </div>
+                  
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+     
+    </div>
+    <!-- ================= RIGHT SECTION (col-3): Ads Sidebar ================= -->
+    <div class="col-lg-3 col-md-12">
+      <!-- Top headline -->     
+          <div class="card-bg-dark shadow-sm  rounded top-stories-widge mb-3">
+            <div class="card-header border-0 d-flex align-items-center p-1">
+              
+              <h6 class="mb-0 fw-bold text-danger">TOP HEADLINES</h6>
+            </div>
+            <div class="">
+              {% for news in headline|slice:"0:3" %}
+              <div class="d-flex align-items-center mt-2 story-item">
+                <a href="/{{news.slug}}" class="me-2">
+                  <img src="{{ news.post_image.url|thumbnail_url }}" alt="{{ news.post_title }}" title="{{ news.post_title }}" class="rounded story-img" loading="lazy">
+                </a>
+                <div class="flex-grow-1">
+                  <a href="/{{news.slug}}" class="text-decoration-none">
+                    <div class="fw-semibold hover-title">{{ news.post_title|slice:":40"|safe }}</div>
+                  </a>
+                  <div class="mt-1 d-flex align-items-center">
+                    <span style="font-size: 14px;">{{ news.schedule_date|date }} | {{ news.schedule_date|time }}</span>
+                    <div class="mx-2" style="--custom-bottom: 0px; --custom-right: 0px;">
+                    {% include 'share.html' with posts=news %}
+                  </div>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+      <!-- Advertisement Box -->
+        <div class="ad-box mb-3">ADVERTISEMENT</div>
+
+       
+    </div>
+  </div>
+   {% include 'news1.html' %}
+</div>
+
+<!-- Slick Slider CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
+
+<!-- jQuery & Slick JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+<script src="https://www.youtube.com/iframe_api"></script> <!-- YouTube Iframe API -->
+
+<script>
+  let players = [];
+  let swiper;
+
+  // ✅ YouTube API Ready
+  function onYouTubeIframeAPIReady() {
+    const iframes = document.querySelectorAll('.video-iframe');
+    iframes.forEach((iframe, index) => {
+      players[index] = new YT.Player(iframe, {
+        events: {
+          'onReady': onPlayerReady,
+          'onStateChange': onPlayerStateChange
+        }
+      });
+    });
+  }
+
+  // ✅ Pause all at start, play first muted
+  function onPlayerReady(event) {
+    players.forEach(player => player && player.pauseVideo());
+    if (players[0]) {
+      players[0].mute();
+      players[0].playVideo();
+    }
+  }
+
+  // ✅ On video end → move to next slide
+  function onPlayerStateChange(event) {
+    if (event.data === YT.PlayerState.ENDED) {
+      // 🛠 Added safety check
+      if (typeof swiper !== "undefined" && swiper.slideNext) {
+        goToNextSlide();
+      }
+    }
+  }
+
+  // ✅ Safe next slide
+  function goToNextSlide() {
+    if (!swiper) return;
+    swiper.slideNext();
+    playCurrentSlideVideo();
+  }
+
+  // ✅ Safe prev slide
+  function goToPrevSlide() {
+    if (!swiper) return;
+    swiper.slidePrev();
+    playCurrentSlideVideo();
+  }
+
+  // ✅ Play only active slide’s video
+  function playCurrentSlideVideo() {
+    const currentIndex = swiper ? swiper.realIndex : 0;
+    players.forEach(p => p && p.pauseVideo && p.pauseVideo());
+    setTimeout(() => {
+      if (players[currentIndex]) {
+        players[currentIndex].mute();
+        players[currentIndex].playVideo();
+      }
+    }, 500);
+  }
+
+  // ✅ Initialize Swiper safely after DOM load
+  document.addEventListener('DOMContentLoaded', function () {
+    swiper = new Swiper('.trending-swiper', {
+      loop: true,
+      autoplay: false,
+      on: {
+        slideChange: playCurrentSlideVideo
+      }
+    });
+
+    // Buttons (only if exist)
+    const nextBtn = document.getElementById('skipBtn');
+    const prevBtn = document.getElementById('prevBtn');
+
+    if (nextBtn) nextBtn.addEventListener('click', goToNextSlide);
+    if (prevBtn) prevBtn.addEventListener('click', goToPrevSlide);
+  });
+</script>
+
+
+<!-- Initialize Slider -->
+<script>
+  $(document).ready(function () {
+    $('.hnews-slider').slick({
+      autoplay: true,
+      autoplaySpeed: 3000,
+      arrows: false,
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      adaptiveHeight: true
+    });
+  });
+</script>
+
+<style>
+ /* ===== BREAKING FLASH CONTAINER ===== */
+.breaking-flash {
+  margin: 18px auto 26px;
+  display: flex;
+  align-items: center;
+  background: #0a7a35;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.35);
+}
+
+/* ===== BREAKING LABEL ===== */
+.breaking-label {
+  background: #d90429;
+  color: #fff;
+  font-weight: 900;
+  font-size: 15px;
+  letter-spacing: 1px;
+  padding: 14px 18px;
+  text-transform: uppercase;
+  animation: flashBlink 1.4s infinite;
+}
+
+/* blinking effect */
+@keyframes flashBlink {
+  0%, 100% { background: #d90429; }
+  50% { background: #ff002b; }
+}
+
+/* ===== TEXT ===== */
+.breaking-text {
+  margin: 0;
+  padding: 12px 18px;
+  font-size: 22px;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  animation: slideIn 0.6s ease-out;
+}
+
+/* slide-in animation */
+@keyframes slideIn {
+  from {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
+  .breaking-flash {
+    flex-direction: column;
+    align-items: flex-start;
+    display: none !important;
+  }
+
+  .breaking-label {
+    width: 100%;
+    text-align: center;
+  }
+
+  .breaking-text {
+    font-size: 18px;
+    white-space: normal;
+  }
+}
+
+  .text-danger{ color: #cc1227  !important; }
+  .title1 {
+    font-weight: 600;
+    font-size: 1rem;
+    text-transform: uppercase;
+  }
+
+  .title1 a {
+    text-decoration: none !important;
+  }
+
+  .title1 a:hover {
+    text-decoration: none !important;
+    color: #cc1227  !important;
+  }
+
+
+  /* Slider wrapper */
+.latest-slider {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+/* Overlay gradient */
+.latest-slide-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* Title truncate */
+.text-truncate-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Indicators */
+.carousel-indicators [data-bs-target] {
+  background-color: #fff;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  opacity: 0.6;
+}
+
+.carousel-indicators .active {
+  opacity: 1;
+}
+
+/* Controls */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-size: 60%, 60%;
+}
+
+/* 🟢 Fix: No white/black blank between slides */
+.carousel-inner {
+  position: relative;
+  overflow: hidden;
+  background: transparent !important;
+}
+
+/* Slides stay stacked to avoid flicker */
+.carousel-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  width: 100%;
+  display: block;
+}
+
+.carousel-item.active {
+  position: relative;
+  opacity: 1;
+  z-index: 2;
+}
+
+/* Image & video fix */
+.carousel-item img,
+.carousel-item video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: transparent !important;
+}
+
+/* Prevent flicker on lazy load */
+.carousel,
+.carousel-item,
+.carousel-inner {
+  background: transparent !important;
+}
+
+
+  .top-stories-widget {
+    width: 100%;
+    max-width: 320px;
+    /* match Google News card width */
+    border-radius: 12px;
+  }
+
+  .story-item {
+    cursor: pointer;
+
+  }
+
+
+
+  .story-img {
+    width: 110px;
+    height: 60px;
+    object-fit: cover;
+  }
+.hover-title {
+    text-decoration: none;
+   font-size: 14px  !important;
+   
+  }
+  .hover-title:hover {
+    text-decoration: none;
+    color: #cc1227  !important;
+  }
+
+.trending-strip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.trending-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.trending-label {
+  color: #cc1227 ;
+  font-size: 12px;
+  font-weight: 700;
+  margin-right: 4px;
+}
+
+.trend-pill {
+  font-size: 12px;
+  padding: 5px 10px;
+  color: #000 !important;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 500;
+  background: #eee;
+}
+
+.trend-pill:hover {
+  background: linear-gradient(to right, #485563 0%, #29323c  51%, #485563  100%);
+   text-decoration: none;
+   color: #fff !important;
+}
+
+.trend-pill.active {
+  background: linear-gradient(to right, #485563 0%, #29323c  51%, #485563  100%);
+  color: #fff !important;
+  text-decoration: none;
+}
+
+.ad-box {
+  height: 278px;
+  background: #4b5563;
+  color: #fff;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+}
+
+.news-thumb{
+  width: 100%;
+  height: 152px;         
+  object-fit: cover;    
+  border-radius: 6px;  
+}
+
+@media (max-width: 991px){
+  .news-thumb{
+    height: 140px;
+  }
+}
+
+/* mobile */
+@media (max-width: 575px){
+  .news-thumb{
+    height: 150px;
+  }
+  .top-stories-widget{
+    max-width: 100%;
+  }
+ 
+}
+  @media (max-width: 768px) {
+    .latest-slide-overlay {
+      padding: 15px;
+    }
+  }
+  /* =========================
+   ✅ 1024px iPad Pro FIX
+   ========================= */
+
+@media (min-width: 992px) and (max-width: 1199px) {
+
+  /* Container width thoda adjust */
+  .container {
+    max-width: 1000px;
+  }
+
+  /* Slider + 2 news better spacing */
+  .latest-slider {
+    border-radius: 16px;
+  }
+
+  /* Make right sidebar slightly narrower */
+  .col-lg-9 {
+    width: 68%;
+  }
+
+  .col-lg-3 {
+    width: 32%;
+  }
+
+  /* Top Stories card full width */
+  .top-stories-widget {
+    max-width: 100%;
+  }
+
+  /* Reduce thumbnail height slightly */
+  .news-thumb {
+    height: 135px;
+  }
+
+  /* Trending cards spacing */
+  .card-bg-dark {
+    padding: 10px;
+    border: none !important;
+  }
+
+  /* Headline text slightly smaller */
+  .hover-title {
+    font-size: 13px !important;
+  }
+
+  /* Advertisement box height adjust */
+  .ad-box {
+    height: 240px;
+  }
+}
+
+</style>

@@ -1,0 +1,309 @@
+{% load static %}
+<div class="container my-4">
+  <div class="row">
+    <!-- ✅ MAIN CONTENT -->
+    <div class="col-md-12 mb-3">
+
+      <!-- 🔹 Center Tabs with thin divider + hover underline animation -->
+      <div class="tabs-wrapper border-bottom mb-3 pb-2 text-center">
+        <ul class="nav slick-tabs justify-content-start flex-wrap" id="categoryTab" role="tablist">
+          {% for category, subcat_data in grouped_postsdata2.items %}
+          <li role="presentation">
+            <button
+              class="nav-link {% if forloop.first %}active{% endif %}"
+              id="tab-{{ category.cat_slug }}"
+              data-bs-toggle="tab"
+              data-bs-target="#pane-{{ category.cat_slug }}"
+              type="button"
+              role="tab"
+            >
+              {{ category.cat_name }}
+            </button>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <!-- 🔹 Category Content -->
+      <div class="tab-content mt-3" id="categoryTabContent">
+        {% for category, subcat_data in grouped_postsdata2.items %}
+          {% with subcat_data.posts as posts %}
+            {% if posts|length >= 6 %}
+              <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="pane-{{ category.cat_slug }}" role="tabpanel">
+
+                <!-- 📰 Top Section -->
+                <div class="row g-3 align-items-stretch">                 
+                  <!-- Left Big News -->
+                  {% with posts|slice:"0:1" as big_post %}
+                      {% for post in big_post %}
+                        <div class="col-lg-5 col-md-12">
+                          <div class="news-card">
+                            <a href="/{{ post.slug }}">
+                              <img src="{{ post.post_image.url }}"
+                                  alt="{{ post.post_title }}"
+                                  class="img-fluid w-100"
+                                  loading="lazy">
+                            </a>
+
+                            <div class="p-2">
+                              <h5 class="fw-bold mb-2 lh-sm">
+                                <a href="/{{ post.slug }}"
+                                  class="text-decoration-none hover-red">
+                                  {{ post.post_title|truncatechars:120 }}
+                                </a>
+                              </h5>
+
+                              <p class="small mb-2">
+                                {{ post.post_description|truncatechars:160 }}
+                              </p>
+
+                              <div class="meta-info d-flex align-items-center gap-2 small">
+                                <span>{{ post.schedule_date|date:"M d, Y" }}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      {% endfor %}
+                    {% endwith %}
+
+
+                  <!-- Right 4 Small News -->
+                  <div class="col-lg-7 col-md-12">
+                    <div class="row g-3">
+                      {% for post in posts|slice:"1:7" %}
+                      <div class="col-4">
+                        <div class="news-card ">
+                          <a href="/{{ post.slug }}">
+                            <img src="{{ post.post_image.url }}" alt="{{ post.post_title }}" class="img-fluid" loading="lazy">
+                          </a>
+                          <h6 class="fw-semibold mb-1 lh-sm p-2">
+                            <a href="/{{ post.slug }}" class=" text-decoration-none hover-red">
+                              {{ post.post_title|truncatechars:70 }}
+                            </a>
+                          </h6>
+                        </div>
+                      </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 📰 More News Grid -->
+                <div class="row g-3 mt-3">
+                   {% for post in posts|slice:"7:" %}
+                  <div class="col-lg-3 col-md-6">
+                    <div class="news-card ">
+                      <a href="/{{ post.slug }}">
+                        <img src="{{ post.post_image.url }}" alt="{{ post.post_title }}" class="img-fluid" loading="lazy">
+                      </a>
+                      <h6 class="fw-semibold mb-1 lh-sm p-2">
+                        <a href="/{{ post.slug }}" class=" text-decoration-none hover-red">
+                          {{ post.post_title|truncatechars:80 }}
+                        </a>
+                      </h6>
+                      <div class="meta-info d-flex align-items-center gap-2 small p-2">
+                        <span>{{ post.schedule_date|date:"M d, Y" }}</span>
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+
+              </div>
+            {% endif %}
+          {% endwith %}
+        {% endfor %}
+      </div>
+    </div>
+
+   
+  </div>
+</div>
+
+
+<style>
+/* ===== 🎨 Centered Tabs (no scroll) with thin divider & hover underline ===== */
+
+.tabs-wrapper {
+  border-bottom: 1px solid #e6e6e6; /* thin gray bottom line */
+  padding-bottom: 10px;
+  margin-bottom: 16px;
+}
+
+/* container for tabs: centered, wrap if needed */
+.slick-tabs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* tab button style */
+.slick-tabs .nav-link {
+  position: relative;
+  border: none;
+  background: transparent;
+  color: #555555;
+  font-weight: 600;
+  font-size: 15.5px;
+  padding: 6px 8px;
+  transition: color 180ms ease, transform 180ms ease;
+  border-radius: 4px;
+  text-transform: none;
+}
+
+/* small hover lift + color */
+.slick-tabs .nav-link:hover {
+  color: #cd182c ;
+  transform: translateY(-2px);
+}
+
+/* active tab color */
+.slick-tabs .nav-link.active {
+  color: #cd182c ;
+  font-weight: 700;
+}
+
+/* animated underline on active */
+.slick-tabs .nav-link::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  bottom: -10px;
+  width: 60%;
+  height: 3px;
+  background: #cd182c ;
+  border-radius: 3px;
+  transition: transform 250ms cubic-bezier(.2,.8,.2,1), opacity 200ms;
+  opacity: 0;
+}
+
+/* show underline for active */
+.slick-tabs .nav-link.active::after {
+  transform: translateX(-50%) scaleX(1);
+  opacity: 1;
+}
+
+/* hover underline (thin) that animates in */
+.slick-tabs .nav-link:hover::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  bottom: -10px;
+  width: 50%;
+  height: 2px;
+  background: rgba(196,30,30,0.25);
+  border-radius: 3px;
+  transition: transform 250ms cubic-bezier(.2,.8,.2,1), opacity 200ms;
+  opacity: 1;
+}
+.slick-tabs .nav-link:hover::before {
+  transform: translateX(-50%) scaleX(1);
+}
+
+/* ===== CARD BASE ===== */
+.news-card {
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: transform 0.28s ease, box-shadow 0.28s ease;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  text-align: left;
+}
+
+.news-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 26px rgba(0,0,0,0.14);
+}
+
+/* ===== IMAGE ===== */
+.news-card img {
+  width: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* big left image */
+.col-lg-6 > .news-card img {
+  height: 300px;
+}
+
+/* right top 4 small images */
+.col-6 .news-card img {
+  height: 130px;
+}
+
+/* bottom grid images */
+.col-lg-4 .news-card img {
+  height: 180px;
+}
+
+/* ===== CONTENT PADDING ===== */
+.news-card .p-2 {
+  padding: 12px 14px !important;
+}
+
+/* titles */
+.news-card h5,
+.news-card h6 {
+  margin: 0;
+  line-height: 1.35;
+}
+
+/* description */
+.news-card p {
+  margin-top: 6px;
+  margin-bottom: 8px;
+  color: #555;
+  line-height: 1.45;
+  text-align: left;
+}
+
+/* meta */
+.meta-info {
+  margin-top: auto;
+  font-size: 12px;
+  color: #777;
+}
+
+/* hover link */
+.hover-red {
+  color: #111;
+  transition: color 0.2s ease;
+}
+.hover-red:hover {
+  color: #cd182c  !important;
+}
+
+/* ===== TAB AREA SPACING FIX ===== */
+.tabs-wrapper {
+  margin-bottom: 20px;
+  padding-bottom: 8px;
+}
+
+
+
+/* responsive tweaks */
+@media (max-width: 768px) {
+   .col-lg-6 > .news-card img {
+    height: 220px;
+  }
+  .col-6 .news-card img {
+    height: 150px;
+  }
+  .col-lg-4 .news-card img {
+    height: 200px;
+  }
+  .big-card img { height: 220px; }
+  .mini-card img { height: 120px; }
+  .slick-tabs .nav-link { font-size: 15px; padding: 6px 6px; }
+}
+</style>

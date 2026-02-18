@@ -1,0 +1,48 @@
+{% load static %}
+<!-- top ad Start -->
+<div class="container d-none d-lg-block bgshadow">
+  
+
+    <div class="row">
+           <div class="col-lg-12" style="margin-top:110px;">
+                {% for headtop in headtopad %}
+                {% if headtop.is_active == 1 %}
+                <a href="{{headtop.ad_url}}"  target="_blank">
+                {% if headtop.ad_type == 'stil' %}
+                <img class="img-fluid w-100" src="../upload/{{headtop.ad_image}}" alt="{{headtop.ad_url}}">
+                {% else %}
+                <video  autoplay loop muted style="width: 100%; min-height:250px;"><source src="../upload/{{headtop.ad_image}}"></video>
+                {% endif %}
+                </a>
+                {% endif %}
+                {% endfor %}
+            
+           </div>
+    </div>
+
+</div>
+<!-- top ad Start -->
+
+{% comment %} ----------ad start--------------- {% endcomment %}
+<div class="col-lg-12 mt-1" >
+    <!-- top ad Start -->
+        <div class="row">
+            <div class="col-lg-12">
+                 {% for headtop in headtopad %}
+                 {% if headtop.is_active == true %}
+                 <a href="{{headtop.ad_url}}"  target="_blank">
+                 {% if headtop.ad_type == 'stil' %}
+                 <img class="img-fluid w-100" src="../upload/{{headtop.ad_image}}" alt="{{headtop.ad_url}}">
+                 {% else %}
+                 <video  autoplay loop muted style="width:100%; height:auto;">
+                    <source src="../upload/{{headtop.ad_image}}">
+                </video>
+                 {% endif %}
+                 </a>
+                 {% endif %}
+                 {% endfor %}
+            </div>
+     </div>
+    <!-- top ad end -->
+    </div>
+       {% comment %} ---------ad-end------------  {% endcomment %}

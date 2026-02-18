@@ -1,0 +1,223 @@
+{% load static %}
+
+
+<footer class="desh-footer">
+
+  <div class="container py-5">
+    <div class="row g-4">
+
+      <!-- ABOUT -->
+      <div class="col-lg-3 col-md-6">
+        <h5 class="footer-title">About MiddleEastBulletin</h5>
+        <p class="footer-text mt-3">
+          <strong>MiddleEastBulletin — Global Perspective. Trusted Journalism.</strong><br><br>
+          A digital news platform committed to truthful, responsible, and independent journalism, with a strong focus on the Middle East and global affairs.
+From regional developments to international narratives, MiddleEastBulletin delivers accurate, timely, and impactful news that matters — without noise or sensationalism.
+        </p>
+
+        <p class="footer-text mt-3">
+          <strong>Email:</strong> {{ profile_setting.email }}<br>
+          <strong>Address:</strong> {{ profile_setting.main_office_address }}
+        </p>
+      </div>
+
+      <!-- POPULAR ARTICLES -->
+      <div class="col-lg-3 col-md-6">
+        <h5 class="footer-title">Popular Articale</h5>
+        <ul class="footer-list mt-3">
+          {% for article in Articale|slice:":3" %}
+          <li>
+            <a href="/{{ article.slug }}">{{ article.post_title|truncatechars:70 }}</a>
+            <span>📅 {{ article.post_date|date:"M d, Y" }}</span>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <!-- LATEST NEWS -->
+      <div class="col-lg-3 col-md-6">
+        <h5 class="footer-title">Latest News</h5>
+        <ul class="footer-list mt-3">
+          {% for article in Articale|slice:"3:6" %}
+          <li>
+            <a href="/{{ article.slug }}">{{ article.post_title|truncatechars:70 }}</a>
+            <span>📅 {{ article.post_date|date:"M d, Y" }}</span>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <!-- USEFUL LINKS -->
+      <div class="col-lg-3 col-md-6">
+        <h5 class="footer-title">Useful Links</h5>
+        <ul class="footer-links mt-3">
+          <li><a href="/">Home</a></li>
+          <li><a href="{% url 'contact-us' %}">Contact Us</a></li>
+          {% for page in pages %}
+            <li><a href="{% url 'cms' page.slug %}">{{ page.pagename }}</a></li>
+          {% endfor %}
+          <li><a href="{% url 'sitemap' %}">Sitemap</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- BOTTOM BAR -->
+  <div class="footer-bottom">
+    <div class="container d-flex justify-content-between align-items-center flex-wrap">
+      <div class="text-white small">
+        © middleeastbulletin All Rights Reserved.
+      </div>
+
+      <div class="footer-social">
+        {% if profile_setting.facbook %}
+        <a href="{{ profile_setting.facbook }}" target="_blank"><i class="fab fa-facebook"></i></a>
+        {% endif %}
+        {% if profile_setting.twitter %}
+        <a href="{{ profile_setting.twitter }}" target="_blank"><i class="fab fa-twitter"></i></a>
+        {% endif %}
+        {% if profile_setting.linkedin %}
+        <a href="{{ profile_setting.linkedin }}" target="_blank"><i class="fab fa-linkedin"></i></a>
+        {% endif %}
+        {% if profile_setting.instagram %}
+        <a href="{{ profile_setting.instagram }}"target="_blank"><i class="fab fa-instagram"></i></a>
+        {% endif %}
+        {% if profile_setting.youtube %}
+        <a href="{{ profile_setting.youtube }}" target="_blank"><i class="fab fa-youtube"></i></a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+</footer>
+
+
+<button onclick="scrollToTop()" class="scroll-up-button" id="scrollTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</button>
+
+<style>
+    /* ===== FOOTER BASE ===== */
+.desh-footer{
+    background: linear-gradient(180deg,#4a5a68,#1f2a34);
+    color:#d1d5db;
+    font-size:14px;
+}
+
+/* TITLES */
+.footer-title{
+    color:#fff;
+    font-weight:600;
+    position:relative;
+    display:inline-block;
+    padding-bottom:6px;
+}
+
+.footer-title::after{
+    content:'';
+    position:absolute;
+    left:0;
+    bottom:0;
+    width:35px;
+    height:3px;
+    background:#cc1227 ;
+    border-radius:2px;
+}
+
+/* TEXT */
+.footer-text{
+    color:#cbd5e1;
+    line-height:1.6;
+}
+
+/* LISTS */
+.footer-list,
+.footer-links{
+    list-style:none;
+    padding:0;
+    margin:0;
+}
+
+.footer-list li{
+    margin-bottom:14px;
+}
+
+.footer-list li a{
+    color:#fff !important;
+    font-weight:500;
+    display:block;
+    text-decoration: none !important;
+}
+
+.footer-list li span{
+    font-size:12px;
+    color:#9ca3af;
+}
+
+.footer-links li{
+    margin-bottom:10px;
+}
+
+.footer-links a{
+    color:#d1d5db !important;
+     text-decoration: none !important;
+}
+
+.footer-links a:hover,
+.footer-list a:hover{
+    color:#cc1227  !important;
+}
+
+/* BOTTOM BAR */
+.footer-bottom{
+    background:rgba(0,0,0,0.25);
+    padding:15px 0;
+    margin-top:30px;
+}
+
+/* SOCIAL */
+.footer-social a{
+    color:#fff !important;
+    margin-left:12px;
+    font-size:16px;
+}
+
+.footer-social a:hover{
+    color:#cc1227 ;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+    .footer-bottom{
+        text-align:center;
+    }
+    .footer-social{
+        margin-top:10px;
+    }
+}
+
+</style>
+
+
+
+<!-- Scripts -->
+<script src="{% static 'assets/category/js/vendor.js' %}"></script>
+<script src="{% static 'assets/category/js/main.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'assets/dnn/js/scripts.js' %}"></script>
+
+<script>
+    // Show Scroll Button When Scrolled
+    window.onscroll = function () {
+        var scrollBtn = document.getElementById("scrollTopBtn");
+        scrollBtn.style.display = (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300)
+            ? "block" : "none";
+    };
+
+    // Scroll to Top Smoothly
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+</script>

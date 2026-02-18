@@ -1,0 +1,212 @@
+{% load static %}
+
+<div class="container my-4">
+<h2 class="news-strip">Latest Stories in Politics, Economy, Sports, Tech & Community</h2>
+  <div class="row g-3 align-items-stretch">
+
+    <!-- 🌟 LEFT : FEATURED + AD -->
+    {% for article in Articale|slice:":1" %}
+    <div class="col-lg-6 col-md-12 d-flex flex-column">
+
+      <!-- FEATURED ARTICLE -->
+      <a href="/{{ article.slug }}" class="text-decoration-none w-100">
+        <div class="article-card featured-card">
+
+          <div class="article-image position-relative">
+            <img src="{{ article.post_image.url }}"
+                alt="{{ article.post_title }}">
+
+            <div class="featured-overlay">
+              <span class="small text-light">
+                {{ article.source_name|default:"News Source" }}
+              </span>
+              <h4 class="fw-bold mb-1">
+                {{ article.post_title|truncatechars:110 }}
+              </h4>
+              <small class="text-light-50">
+                {{ article.post_date|date:"M d, Y" }}
+              </small>
+            </div>
+          </div>
+
+        </div>
+      </a>
+
+      <!-- ADVERTISEMENT -->
+      <div class="ad-box-h">
+        ADVERTISEMENT
+      </div>
+
+    </div>
+    {% endfor %}
+
+
+    <!-- 📰 MIDDLE : 2 ARTICLES -->
+    <div class="col-lg-3 col-md-6 d-flex flex-column gap-3">
+      {% for article in Articale|slice:"1:3" %}
+      <a href="/{{ article.slug }}"
+         class="text-decoration-none flex-fill">
+
+        <div class="article-card small-card h-100">
+
+          <div class="article-image">
+            <img src="{{ article.post_image.url }}" alt="{{ article.post_title }}">
+          </div>
+
+          <div class="card-bg-dark p-2">
+            <div class="fw-semibold title-small">
+              {{ article.post_title|truncatechars:80 }}
+            </div>
+            <div class="text-left">{{ article.post_date|date:"M d, Y" }}</div>
+          </div>
+
+        </div>
+      </a>
+      {% endfor %}
+       
+    </div>
+
+    <!-- 📺 RIGHT : 2 ARTICLES -->
+    <div class="col-lg-3 col-md-6 d-flex flex-column gap-3">
+      {% for article in Articale|slice:"3:5" %}
+      <a href="/{{ article.slug }}"
+         class="text-decoration-none flex-fill">
+
+        <div class="article-card small-card h-100">
+
+          <div class="article-image">
+            <img src="{{ article.post_image.url }}" alt="{{ article.post_title }}">
+          </div>
+
+          <div class="card-bg-dark p-2">
+            <div class="fw-semibold title-small">
+              {{ article.post_title|truncatechars:80 }}
+            </div>
+            <div class="text-left">{{ article.post_date|date:"M d, Y" }}</div>
+          </div>
+
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+
+
+<style>
+  
+/* ===== COMMON CARD ===== */
+.article-card{
+  border-radius:12px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  transition:all 0.3s ease;
+  border: none !important;
+}
+
+
+/* ===== FEATURED CARD ===== */
+.featured-card{
+  height: 360px;   /* 🔥 main balance */
+}
+
+.featured-card .article-image{
+  height:100%;
+  position:relative;
+}
+
+.featured-card img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* overlay */
+.featured-overlay{
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:100%;
+  padding:14px 16px;
+  color:#fff;
+  background:linear-gradient(
+    to top,
+    rgba(0,0,0,0.85),
+    rgba(0,0,0,0.4),
+    transparent
+  );
+}
+
+.featured-card h4{
+  font-size:20px;
+  line-height:1.25;
+  font-weight:700;
+}
+
+/* ===== SMALL CARDS ===== */
+.small-card .article-image{
+  height:170px;
+}
+
+
+
+.title-small{
+  font-size:13px;
+  line-height:1.4;
+}
+
+/* ===== AD BOX ===== */
+.ad-box-h{
+  height: 135px;
+  background:#4b5563;
+  color:#fff;
+  display:grid;
+  place-items:center;
+  border-radius:12px;
+  font-weight:600;
+  letter-spacing:0.5px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 991px){
+  .featured-card{
+    height:300px;
+  }
+
+  .small-card .article-image{
+    height:180px;
+  }
+
+  .ad-box-h{
+    height:120px;
+  }
+}
+
+
+/* ===== SMALL CARDS ===== */
+.small-card .article-image{
+    height:160px;
+}
+
+.card-bg-dark{
+    border-radius: 0px 0px 10px 10px;
+}
+
+/* ===== TITLES ===== */
+.title-small{
+    font-size:13px;
+    line-height:1.4;
+    margin-bottom:4px;
+    text-align: left;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width:991px){
+    .small-card .article-image{
+        height:180px;
+    }
+}
+
+</style>

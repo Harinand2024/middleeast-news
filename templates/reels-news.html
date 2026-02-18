@@ -1,0 +1,165 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div class=" my-4">
+
+  <!-- SECTION TITLE -->
+  <div class="mb-3">
+    <h4 class="news-strip">Shorts & Reels</h4>
+    
+  </div>
+
+  <!-- SLIDER -->
+  <div class="shorts-wrap">
+    <div class="swiper insta-slider">
+      <div class="swiper-wrapper">
+
+        {% for truet in Reels %}
+        <div class="swiper-slide">
+
+          <a href="https://www.youtube.com/watch?v={{ truet.video_url }}" target="_blank">
+            <div class="reelimg">
+
+              <div class="reel-media">
+                <img src="https://img.youtube.com/vi/{{ truet.video_url }}/hqdefault.jpg"
+                     class="reelthumb"
+                     alt="{{ truet.slug }}">
+              </div>
+
+              <span class="reelplay">
+                <i class="fa fa-play-circle"></i>
+              </span>
+
+            </div>
+          </a>
+
+        </div>
+        {% endfor %}
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  new Swiper(".insta-slider", {
+    slidesPerView: "auto",
+    spaceBetween: 15,
+    freeMode: true,
+    grabCursor: true
+  });
+
+  Fancybox.bind('[data-fancybox="reels"]', {
+    Toolbar: {
+      display: ["close"]
+    }
+  });
+
+});
+</script>
+
+<style>
+/* SECTION */
+.shorts-title {
+  font-weight: 700;
+  letter-spacing: .5px;
+  
+}
+.shorts-line {
+  width: 45px;
+  height: 3px;
+  background: #cd182c ;
+  display: block;
+  margin-bottom: 18px;
+}
+
+/* SWIPER */
+.insta-slider {
+  width: 100%;
+}
+.swiper-wrapper {
+  display: flex;
+}
+.swiper-slide {
+  width: 240px;
+  flex-shrink: 0;
+}
+
+/* REEL CARD */
+.reelimg {
+  aspect-ratio: 9 / 16;
+  background: #000;
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 8px 22px rgba(0,0,0,.28);
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+.reelimg:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 34px rgba(0,0,0,.38);
+}
+
+/* MEDIA FIX */
+.reel-media {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.reelthumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;      /* FIXED STRETCH */
+  object-position: center;
+  filter: contrast(1.05) saturate(1.05);
+}
+
+/* TOP & BOTTOM NEWS STRIP */
+.reelimg::before,
+.reelimg::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 22px;
+  background: linear-gradient(90deg, #7a0000, #c40000);
+  z-index: 5;
+}
+.reelimg::before { top: 0; }
+.reelimg::after { bottom: 0; }
+
+/* PLAY ICON */
+.reelplay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 54px;
+  color: #fff;
+  z-index: 10;
+  opacity: .95;
+  transition: transform .25s ease;
+}
+.reelimg:hover .reelplay {
+  transform: scale(1.08);
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .swiper-slide {
+    width: 190px;
+  }
+}
+</style>
+

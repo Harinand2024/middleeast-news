@@ -1,0 +1,371 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+{% load image_filters %}
+<style>
+  a {
+  text-decoration: none !important;
+}
+
+li {
+  list-style: none !important;
+}
+.section-title {
+    font-weight: bold;
+    font-size: 2rem;
+    text-align: left;
+    line-height: 36px;
+}
+/* Apply to your existing slider-item class */
+.slider-item1 a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;          
+  height: 40px;        
+  border-radius: 50%;   
+  background-color: #3d3c38;
+  color: white !important;        
+  text-decoration: none;
+  font-size: 18px;
+  transition: transform 0.2s;
+}
+
+.slider-item1 a:hover {
+  transform: scale(1.1); /* Slight zoom on hover */
+}
+.slider-item1 button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;          
+  height: 40px;        
+  border-radius: 50%;   
+  background-color: #3d3c38;
+  color: white !important;        
+  text-decoration: none;
+  font-size: 18px;
+  transition: transform 0.2s;
+}
+
+.slider-item1 button:hover {
+  transform: scale(1.1); /* Slight zoom on hover */
+}
+/* ===== SOCIAL SHARE WRAPPER ===== */
+.social-share-vertical {
+  position: fixed;
+  top: 22%;
+  left: 14px;
+  z-index: 999;
+  padding: 8px;
+  border-radius: 18px;
+
+  /* background plate */
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  box-shadow:
+    0 20px 40px rgba(0,0,0,.18),
+    inset 0 1px 0 rgba(255,255,255,.6);
+
+  display: flex;
+  flex-direction: column;
+ 
+}
+
+/* ===== TOGGLE BUTTON ===== */
+.share-toggle {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #ff001c, #a80f20);
+  color: #fff;
+  border: none;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow:
+    0 10px 22px rgba(204,18,39,.45),
+    inset 0 1px 0 rgba(255,255,255,.3);
+
+  cursor: pointer;
+  transition: all .3s ease;
+}
+
+.share-toggle:hover {
+  transform: scale(1.08);
+}
+
+/* ===== SHARE ICON LIST (UNIQUE) ===== */
+.share-icons-list {
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: all .35s ease;
+}
+
+.share-icons-list.show {
+  opacity: 1;
+  max-height: 400px;
+  width: 50px;
+}
+
+/* ===== SHARE ICON ===== */
+.share-icons-list a {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: rgb(240 235 235 / 90%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  transition: all .25s ease;
+}
+
+.share-icons-list a:hover {
+  background: #cc1227;
+  transform: translateX(6px);
+}
+
+.share-icons-list i {
+  font-size: 17px;
+  color: #222;
+}
+
+.share-icons-list a:hover i {
+  color: #fff;
+}
+
+
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
+
+  .social-share-vertical {
+    position: fixed;
+    bottom: -7px;
+    top: auto;
+    left: 4px;
+    padding: 8px;
+    border-radius: 20px;
+    z-index: 9999;
+  }
+
+  /* Icons open upward */
+  .share-icons-list {
+    position: absolute;
+    bottom: 60px;   /* toggle ke upar */
+    right: 0;
+    display: flex;
+    flex-direction: column-reverse; /* important */
+    gap: 10px;
+
+    opacity: 0;
+    transform: translateY(15px);
+    pointer-events: none;
+    transition: all .3s ease;
+  }
+
+  .share-icons-list.show {
+    max-height: 400px;
+    width: 60px;
+    background: white;
+    border-radius: 20px;
+    padding: 8px;
+}
+  }
+
+  .share-icons-list a {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+  }
+
+  .share-toggle {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+  }
+  .section-title{
+    font-weight: bold;
+    font-size: 21px;
+    line-height: 30px;
+    text-align: justify;
+  }
+
+
+
+</style>
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-lg-9 col-md-7 col-sm-12">
+      <div class="position-relative my-1">
+       
+        <div class="card-bg-dark"style="border-radius: 8px; background: #fff;
+    padding: 5px 10px;">
+          <div class="section-title mt-2">{{ Blogdetails.post_title }}</div>
+          <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center mt-3 small">
+
+            <!-- Author -->
+            <p class="m-0 me-md-2" >
+              {% if Blogdetails.author %}
+                Middle East News :
+                {{ Blogdetails.author.first_name|default:""|capfirst }}
+                {{ Blogdetails.author.last_name|default:""|capfirst }}
+
+              {% elif Blogdetails.journalist %}
+                Author :
+                <a href="{% url 'journalist_profile' Blogdetails.journalist.username %}"
+                  style="color:#cc1227;">
+                  {{ Blogdetails.journalist.first_name|default:""|capfirst }}
+                  {{ Blogdetails.journalist.last_name|default:""|capfirst }}
+                </a>
+
+              {% else %}
+                Post by : Admin
+              {% endif %}
+            </p>
+
+            <!-- Date + Time + Views -->
+            <div class="d-flex flex-wrap gap-2 mt-1">
+              <small>{{ Blogdetails.schedule_date|date }}</small>
+              <small>{{ Blogdetails.schedule_date|time }}</small>
+              <small>
+                <i class="far fa-eye me-1"></i>{{ Blogdetails.viewcounter }}
+              </small>
+            </div>
+
+          </div>
+
+          <!-- <div class="double-underline"></div> -->
+          
+        </div>
+        {% if Blogdetails.post_image == '' %}
+        <img class="img-fluid w-100" src="{% static 'upload/blog/null.jpg' %}" style="object-fit: cover"
+          alt="{{ Blogdetails.post_title|default:'No Image' }}" title="{{ Blogdetails.post_title }}" loading="lazy">
+        {% else %}
+        <img class="img-fluid w-100" src="{{ Blogdetails.post_image.url }}" style="object-fit: cover"
+          alt="{{ Blogdetails.post_title }}" title="{{ Blogdetails.post_title }}" loading="lazy">
+        {% endif %}
+        <div class="py-3 card-bg-dark" >
+              <!-- 🌐 SOCIAL SHARE VERTICAL -->
+              <!-- 🌟 HTML -->
+                <div class="social-share-vertical mb-2">
+                  <!-- Share Toggle Button -->
+                  <button class="share-toggle" id="shareToggle" title="Share">
+                    <i class="fa-solid fa-share-from-square"></i>
+                  </button>
+
+                  <!-- Hidden Social Icons -->
+                  <div class="share-icons-list" id="socialIcons">
+                    <a href="https://api.whatsapp.com/send?text=Check%20this%20out!%20{{ request.build_absolute_uri }}" target="_blank">
+                      <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a onclick="copyLink('{{ Blogdetails.slug }}')" title="Copy Link">
+                      <i class="fas fa-link"></i>
+                    </a>
+                    <a href="mailto:?subject=Check%20this%20out&body=Read%20here:%20{{ request.build_absolute_uri }}">
+                      <i class="fas fa-envelope"></i>
+                    </a>
+                    <a href="https://t.me/share/url?url={{ request.build_absolute_uri }}&text=Check%20this%20out!" target="_blank">
+                      <i class="fab fa-telegram"></i>
+                    </a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank">
+                      <i class="fab fa-facebook"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}" target="_blank">
+                      <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://twitter.com/intent/tweet?text=Check%20this%20out!%20{{ request.build_absolute_uri }}" target="_blank">
+                      <i class="fab fa-twitter"></i>
+                    </a>
+                  </div>
+                </div>
+          
+          <div class="text-justify" style="line-height: 1.8; font-size: 16px;"> 
+          {{ Blogdetails.post_des|safe }}
+          </div>
+
+          {% for tag in Blogdetails.tags.all %}
+          <a href="/tags/{{ tag.slug }}" class="badge rounded-pill bg-primary-subtle me-2 mb-2">#{{ tag.name }}</a>
+          {% endfor %}
+        </div>
+      </div>
+
+      {# -----------main-news--------- #}
+      <!-- {% for mnews in mainnews %}
+        <div class="position-relative mb-3 mt-3 artical-box">
+          <h2 class="title my-3">
+            <a href="/{{ mnews.slug }}" title="{{ mnews.post_title }}">{{ mnews.post_title }}</a>
+          </h2>
+
+          <img class="img-fluid w-100" src="{{ mnews.post_image.url }}" style="object-fit: cover" alt="{{ mnews.post_title }}" title="{{ mnews.post_title }}" loading="lazy">
+
+          <div class="border-top-0 mt-1">
+            <div class="d-flex align-items-center my-3">
+              <small> {{ mnews.schedule_date|date }}</small>
+              <small > {{ mnews.schedule_date|time }}</small>
+              <small ><i class="far fa-eye mr-2"></i>{{ mnews.post_status|add:mnews.viewcounter }}</small>
+            </div>
+
+            <p class="m-0">
+              {{ mnews.post_short_des|slice:":270"|safe }}...
+              <a href="/{{ mnews.slug }}" title="Read more about {{ mnews.post_title }}">Read More</a>
+            </p>
+          </div>
+        </div>
+      {% endfor %} -->
+      {# -----------main-news--------- #}
+
+      <div class="row mt-4">
+         <div class="mb-3">
+          <div class="section-title mt-2">Articles</div>
+          <div class="double-underline"></div>
+        </div>
+        {% for article in Articale %}
+        <div class="col-lg-3 col-md-12  col-sm-12 mb-3">
+          <a href="/{{ article.slug }}" class="text-decoration-none ">
+            <div class="article-card shadow-sm rounded overflow-hidden ">
+              <div class="article-image">
+                <img src="{{ article.post_image.url }}" class="img-fluid w-100" alt="{{ article.post_title }}" style="height: 160px; object-fit: cover;">
+              </div>
+              <div class="p-2 card-bg-dark">
+                <div class="fw-semibold mb-1" style="font-size: 13px; line-height: 1.4;">
+                  {{ article.post_title|truncatechars:48 }}
+                </div>
+                <small class="">{{ article.post_date|date:"M d, Y" }}</small>
+              </div>
+            </div>
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-md-5 col-sm-12">
+      {# Right Column #}
+      {% include "rightcollam.html" %}
+    </div>
+
+  </div>
+</div>
+<script>
+function copyLink(slug) {
+  const link = window.location.origin + '/' + slug;
+  navigator.clipboard.writeText(link);
+  alert('🔗 Link copied!');
+}
+</script>
+
+<script>
+document.getElementById("shareToggle").addEventListener("click", function () {
+  const icons = document.getElementById("socialIcons");
+  icons.classList.toggle("show");
+});
+</script>
+{% endblock %}

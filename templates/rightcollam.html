@@ -1,0 +1,112 @@
+{% load static %}
+{% load image_filters %}
+<div class="mb-3 ">
+    <div class="mb-3">
+        <div class="">Trending News</div>
+        <div class="double-underline"></div>
+    </div>
+
+    <div class="">
+        {% for trendingpost in trendpost %}
+        <div class="card-bg-dark mb-3 p-2" style=" border-radius: 8px;">
+
+            <a class="news-title" href="/{{trendingpost.slug}}">
+
+                <img src="{{trendingpost.post_image.url}}" alt="{{trendingpost.post_title}}" class="img-fluid">
+
+                <p class="my-2 fw-bold">
+                    {{ trendingpost.post_title|slice:":60"|safe }}...
+                </p>
+
+                <!-- <p class="news-description">
+                    {{ trendingpost.post_short_des|slice:":100"|safe }}
+                </p> -->
+
+            </a>
+
+            <div class="d-flex align-items-center  news-meta">
+                <small>{{ trendingpost.schedule_date|date }}</small>
+                <small class="ms-2">{{ trendingpost.schedule_date|time }}</small>
+                <small class="ms-2">
+                    <i class="far fa-eye"></i>
+                    {{ trendingpost.post_status|add:trendingpost.viewcounter }}
+                </small>
+
+                <div class="ms-auto">
+                    {% include 'share.html' with posts=trendingpost %}
+                </div>
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+<style>
+    .news-card {
+        border-bottom: 1px solid #ddd;
+    }
+
+    .news-header {
+        padding: 10px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 20px;
+        font-family: 'Montserrat', sans-serif;
+        text-transform: uppercase;
+    }
+
+    .news-image {
+        width: 100%;
+        height: auto;
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .news-content {
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+    }
+
+    .news-title {
+        font-size: 20px;
+        margin-bottom: 8px;
+        line-height: 1.5;
+        font-weight: 600;
+
+
+    }
+
+    .news-description {
+        line-height: 1.4;
+
+    }
+
+    .news-meta {
+        justify-content: space-between;
+        padding: 5px 0px;
+        border-top: 1px solid #eee;
+        font-size: 15px;
+
+    }
+
+    .news-meta span {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .news-meta img {
+        width: 14px;
+        height: 14px;
+    }
+
+    a {
+        text-decoration: none !important;
+    }
+
+    li {
+        list-style: none !important;
+    }
+</style>
