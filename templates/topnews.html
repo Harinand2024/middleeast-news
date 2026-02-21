@@ -1,12 +1,13 @@
 {% load image_filters %}
+<h1 class="news-strip">Middle East News, World Updates & Daily Top Headlines</h1>
 <div class="container mb-3">
-  <!-- <h1 class="main-heading">Middle East News, World Updates & Daily Top Headlines</h1> -->
-   <div class="breaking-flash">
+  
+   <!-- <div class="breaking-flash">
       <span class="breaking-label">BREAKING</span>
       <h1 class="breaking-text">
         Middle East News, World Updates & Daily Top Headlines
       </h1>
-    </div>
+    </div> -->
 
   <div class="row">
     <!-- ================= LEFT SECTION (col-9): News Content ================= -->
@@ -52,7 +53,7 @@
                         <span class="text-light small">{{ news.post_date }}</span>
                       </div>
                       <h5 class="text-white fw-semibold mb-4 text-truncate-2">
-                        <a href="/{{ news.slug }}" class="text-white text-decoration-none text-left">
+                        <a href="/{{ news.slug }}" class="text-white text-decoration-none text-start fs-4">
                           {{ news.post_title|truncatechars:180 }}
                         </a>
                       </h5>
@@ -85,7 +86,7 @@
                     </a>
                     <div class="pt-2">
                       <a href="/{{ news.slug }}" class="text-decoration-none">
-                        <div class="fw-semibold small hover-title text-left">{{ news.post_title|truncatechars:150 }}</div>
+                        <div class="fw-semibold small hover-title text-start">{{ news.post_title|truncatechars:150 }}</div>
                       </a>
                       <div class="mt-2 d-flex align-items-center">
                         <span style="font-size: 14px;">{{ news.schedule_date }}</span>
@@ -128,9 +129,8 @@
         <!-- Top Stories -->
         <div class="col-lg-4 col-md-6 mb-3">
           <div class="card-bg-dark shadow-sm  rounded top-stories-widget h-100">
-            <div class="card-header border-0 d-flex align-items-center p-1">
-              
-              <h6 class="mb-0 fw-bold text-danger">BREAKING</h6>
+            <div class="text-center pb-1">
+              <h4 class="mb-2 fw-bold text-danger">BREAKING</h4>
             </div>
             <div class="">
               {% for news in bnews|slice:"0:3" %}
@@ -212,9 +212,9 @@
     <div class="col-lg-3 col-md-12">
       <!-- Top headline -->     
           <div class="card-bg-dark shadow-sm  rounded top-stories-widge mb-3">
-            <div class="card-header border-0 d-flex align-items-center p-1">
+            <div class="text-center pb-1">
               
-              <h6 class="mb-0 fw-bold text-danger">TOP HEADLINES</h6>
+              <h4 class="mb-0 fw-bold text-danger">TOP HEADLINES</h4>
             </div>
             <div class="">
               {% for news in headline|slice:"0:3" %}
@@ -243,8 +243,7 @@
        
     </div>
   </div>
-   {% include 'video_news.html' %}
-   {% include 'news1.html' %}
+  
 </div>
 
 <!-- Slick Slider CSS -->
@@ -338,22 +337,7 @@
 </script>
 
 
-<!-- Initialize Slider -->
-<script>
-  $(document).ready(function () {
-    $('.hnews-slider').slick({
-      autoplay: true,
-      autoplaySpeed: 3000,
-      arrows: false,
-      dots: true,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      adaptiveHeight: true
-    });
-  });
-</script>
+
 
 <style>
  /* ===== BREAKING FLASH CONTAINER ===== */
@@ -430,7 +414,11 @@
   }
 }
 
-  .text-danger{ color: #cc1227  !important; }
+  .text-danger{ 
+    color: #cc1227  !important;
+    font-size: 20px;
+    text-align: center;
+  }
   .title1 {
     font-weight: 600;
     font-size: 1rem;
@@ -678,10 +666,7 @@
   }
 
   /* Trending cards spacing */
-  .card-bg-dark {
-    padding: 10px;
-    border: none !important;
-  }
+
 
   /* Headline text slightly smaller */
   .hover-title {

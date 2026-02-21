@@ -1,32 +1,35 @@
-
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load static %}
-{% block body %}
 {% load image_filters %}
-<div class="m-auto">
-    <!-- top ads (3 ads) start -->
-    {% include 'top_ads.html' %}
-    <!-- top ads end -->
 
-    <!-- top news (BREAKING NEWS, TRENDING NEWS & Events ) start -->
-    {% include 'topnews.html' %}
-    <!-- top news end -->
-    
-    <!-- NEWS articale Start -->
-     {% include 'articale.html' %}
-    <!-- NEWS articale End -->
-   
-   
-    
-    <!-- NEWS TABS Start -->
-     {% include 'news_tabs.html' %}
-    <!-- NEWS TABS End -->
+{% block body %}
 
-       
-     {% include 'reels-news.html' %}
+<div class="container-fluid px-0">
 
-    <!--BRAND PARTNERS Start -->
-    {% include 'bp-logo.html' %}
-    <!--BRAND PARTNERS End -->
+    {# ===== TOP ADVERTISEMENTS ===== #}
+    {% include "top_ads.html" %}
+
+    {# ===== TOP NEWS SECTION ===== #}
+    {% include "topnews.html" %}
+
+    {# ===== VIDEO NEWS SECTION ===== #}
+    {% include "video_news.html" %}
+
+    {# ===== MAIN NEWS ===== #}
+    {% include "news1.html" %}
+
+    {# ===== FEATURED ARTICLES ===== #}
+    {% include "articale.html" %}
+
+    {# ===== CATEGORY TABS ===== #}
+    {% include "news_tabs.html" %}
+
+    {# ===== REELS SECTION ===== #}
+    {% include "reels-news.html" %}
+
+    {# ===== BRAND PARTNERS ===== #}
+    {% include "bp-logo.html" %}
+
 </div>
+
 {% endblock %}

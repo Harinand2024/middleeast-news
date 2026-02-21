@@ -1,45 +1,49 @@
 {% load image_filters %}
 {% if videos %}
 
-<div class="container my-5">
+<div class="container my-4">
 
     <h2 class="news-strip">WATCH MIDDLE EAST</h2>
 
-    <div class="watch-wrapper">
+    <div class="row">
+         <div class="col-lg-8 col-md-7 col-sm-12">
+            {% with videos.0 as main %}
+            <div class="watch-left">
 
-        {% with videos.0 as main %}
-        <div class="watch-left">
-
-            <div class="video-box" id="videoBox" data-url="{{ main.video_url }}">
-                <img src="{{ main.video_thumbnail.url }}" class="main-thumb" id="mainThumb">
-                <div class="play-btn" id="playOverlay">▶</div>
-            </div>
-
-            <div class="video-info mt-2">
-                <h2 id="mainTitle">{{ main.video_title|truncatewords:20 }}</h2>
-                <p id="mainDesc">{{ main.video_short_des|truncatewords:30 }}</p>
-            </div>
-
-        </div>
-        {% endwith %}
-
-        <div class="watch-right">
-            {% for video in videos %}
-            <div class="side-item {% if forloop.first %}active{% endif %}"
-                 data-url="{{ video.video_url }}"
-                 data-title="{{ video.video_title|escapejs }}"
-                 data-desc="{{ video.video_short_des|escapejs }}"
-                 data-thumb="{{ video.video_thumbnail.url }}">
-
-                <img src="{{ video.video_thumbnail.url }}">
-                <div class="text-left fs-6">
-                    {{ video.video_title|truncatewords:10 }}
+                <div class="video-box" id="videoBox" data-url="{{ main.video_url }}">
+                    <img src="{{ main.video_thumbnail.url }}" class="main-thumb" id="mainThumb">
+                    <div class="play-btn" id="playOverlay">▶</div>
                 </div>
-            </div>
-            {% endfor %}
-        </div>
 
+                <div class="card-bg-dark video-info text-start">
+                    <h4 id="mainTitle">{{ main.video_title }}</h4>
+                    <p id="mainDesc">{{ main.video_short_des }}</p>
+                </div>
+
+            </div>
+            {% endwith %}
+        </div>
+        <div class="col-lg-4 col-md-5 col-sm-12">
+            <div class="watch-right">
+                {% for video in videos %}
+                <div class="side-item {% if forloop.first %}active{% endif %}"
+                    data-url="{{ video.video_url }}"
+                    data-title="{{ video.video_title|escapejs }}"
+                    data-desc="{{ video.video_short_des|escapejs }}"
+                    data-thumb="{{ video.video_thumbnail.url }}">
+
+                    <img src="{{ video.video_thumbnail.url }}">
+                    <div class="text-start fs-6">
+                        {{ video.video_title|truncatewords:10 }}
+                    </div>
+                </div>
+                {% endfor %}               
+            </div>
+            <div class="ad-box-h mt-4">ADVERTISEMENT</div>
+        </div>
+        
     </div>
+    
 </div>
 
 {% endif %}
@@ -59,7 +63,7 @@
     position: relative;
     height: 460px;
     background: black;
-    border-radius: 6px;
+    border-radius: 6px 6px 0px 0px;
     overflow: hidden;
     cursor: pointer;
 }

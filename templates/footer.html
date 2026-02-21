@@ -1,6 +1,5 @@
 {% load static %}
 
-
 <footer class="desh-footer">
 
   <div class="container py-5">
@@ -11,8 +10,10 @@
         <h5 class="footer-title">About MiddleEastBulletin</h5>
         <p class="footer-text mt-3">
           <strong>MiddleEastBulletin — Global Perspective. Trusted Journalism.</strong><br><br>
-          A digital news platform committed to truthful, responsible, and independent journalism, with a strong focus on the Middle East and global affairs.
-From regional developments to international narratives, MiddleEastBulletin delivers accurate, timely, and impactful news that matters — without noise or sensationalism.
+          A digital news platform committed to truthful, responsible, and independent journalism,
+          with a strong focus on the Middle East and global affairs.
+          From regional developments to international narratives,
+          delivering accurate and impactful news — without sensationalism.
         </p>
 
         <p class="footer-text mt-3">
@@ -23,11 +24,13 @@ From regional developments to international narratives, MiddleEastBulletin deliv
 
       <!-- POPULAR ARTICLES -->
       <div class="col-lg-3 col-md-6">
-        <h5 class="footer-title">Popular Articale</h5>
+        <h5 class="footer-title">Popular Articles</h5>
         <ul class="footer-list mt-3">
           {% for article in Articale|slice:":3" %}
           <li>
-            <a href="/{{ article.slug }}">{{ article.post_title|truncatechars:70 }}</a>
+            <a href="/{{ article.slug }}">
+              {{ article.post_title|truncatechars:70 }}
+            </a>
             <span>📅 {{ article.post_date|date:"M d, Y" }}</span>
           </li>
           {% endfor %}
@@ -40,7 +43,9 @@ From regional developments to international narratives, MiddleEastBulletin deliv
         <ul class="footer-list mt-3">
           {% for article in Articale|slice:"3:6" %}
           <li>
-            <a href="/{{ article.slug }}">{{ article.post_title|truncatechars:70 }}</a>
+            <a href="/{{ article.slug }}">
+              {{ article.post_title|truncatechars:70 }}
+            </a>
             <span>📅 {{ article.post_date|date:"M d, Y" }}</span>
           </li>
           {% endfor %}
@@ -53,9 +58,15 @@ From regional developments to international narratives, MiddleEastBulletin deliv
         <ul class="footer-links mt-3">
           <li><a href="/">Home</a></li>
           <li><a href="{% url 'contact-us' %}">Contact Us</a></li>
+
           {% for page in pages %}
-            <li><a href="{% url 'cms' page.slug %}">{{ page.pagename }}</a></li>
+            <li>
+              <a href="{% url 'cms' page.slug %}">
+                {{ page.pagename }}
+              </a>
+            </li>
           {% endfor %}
+
           <li><a href="{% url 'sitemap' %}">Sitemap</a></li>
         </ul>
       </div>
@@ -66,42 +77,54 @@ From regional developments to international narratives, MiddleEastBulletin deliv
   <!-- BOTTOM BAR -->
   <div class="footer-bottom">
     <div class="container d-flex justify-content-between align-items-center flex-wrap">
+
       <div class="text-white small">
-        © middleeastbulletin All Rights Reserved.
+        © {{ now|date:"Y" }} middleeastbulletin. All Rights Reserved.
       </div>
 
       <div class="footer-social">
         {% if profile_setting.facbook %}
-        <a href="{{ profile_setting.facbook }}" target="_blank"><i class="fab fa-facebook"></i></a>
+          <a href="{{ profile_setting.facbook }}" target="_blank" rel="noopener">
+            <i class="fab fa-facebook-f"></i>
+          </a>
         {% endif %}
         {% if profile_setting.twitter %}
-        <a href="{{ profile_setting.twitter }}" target="_blank"><i class="fab fa-twitter"></i></a>
+          <a href="{{ profile_setting.twitter }}" target="_blank" rel="noopener">
+            <i class="fab fa-twitter"></i>
+          </a>
         {% endif %}
         {% if profile_setting.linkedin %}
-        <a href="{{ profile_setting.linkedin }}" target="_blank"><i class="fab fa-linkedin"></i></a>
+          <a href="{{ profile_setting.linkedin }}" target="_blank" rel="noopener">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
         {% endif %}
         {% if profile_setting.instagram %}
-        <a href="{{ profile_setting.instagram }}"target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="{{ profile_setting.instagram }}" target="_blank" rel="noopener">
+            <i class="fab fa-instagram"></i>
+          </a>
         {% endif %}
         {% if profile_setting.youtube %}
-        <a href="{{ profile_setting.youtube }}" target="_blank"><i class="fab fa-youtube"></i></a>
+          <a href="{{ profile_setting.youtube }}" target="_blank" rel="noopener">
+            <i class="fab fa-youtube"></i>
+          </a>
         {% endif %}
       </div>
+
     </div>
   </div>
 
 </footer>
 
-
-<button onclick="scrollToTop()" class="scroll-up-button" id="scrollTopBtn">
-    <i class="fas fa-arrow-up"></i>
+<!-- Scroll To Top -->
+<button class="scroll-up-button" id="scrollTopBtn" aria-label="Scroll to top">
+  <i class="fas fa-arrow-up"></i>
 </button>
 
 <style>
     /* ===== FOOTER BASE ===== */
 .desh-footer{
-    background: linear-gradient(180deg,#4a5a68,#1f2a34);
-    color:#d1d5db;
+    background: linear-gradient(to right, #0c1f1a, #265b3b, #1c1c1c);
+    color:#f5f5f5;
     font-size:14px;
 }
 
@@ -202,22 +225,24 @@ From regional developments to international narratives, MiddleEastBulletin deliv
 
 
 <!-- Scripts -->
-<script src="{% static 'assets/category/js/vendor.js' %}"></script>
-<script src="{% static 'assets/category/js/main.js' %}"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="{% static 'assets/dnn/js/scripts.js' %}"></script>
 
 <script>
-    // Show Scroll Button When Scrolled
-    window.onscroll = function () {
-        var scrollBtn = document.getElementById("scrollTopBtn");
-        scrollBtn.style.display = (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300)
-            ? "block" : "none";
-    };
+document.addEventListener("DOMContentLoaded", function () {
 
-    // Scroll to Top Smoothly
-    function scrollToTop() {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+  const scrollBtn = document.getElementById("scrollTopBtn");
+
+  if (!scrollBtn) return;
+
+  window.addEventListener("scroll", function () {
+    scrollBtn.style.display =
+      window.scrollY > 300 ? "block" : "none";
+  });
+
+  scrollBtn.addEventListener("click", function () {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
+});
 </script>
