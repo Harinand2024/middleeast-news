@@ -1,5 +1,121 @@
 {% load static %}
+<style>
+    /* ===========================
+   🔥 PREMIUM SUBSCRIBE MODAL
+   =========================== */
 
+#ModalSubscribe .modal-content{
+  border-radius:18px;
+  border:none;
+  overflow:hidden;
+  background:rgba(255,255,255,0.95);
+  backdrop-filter:blur(12px);
+  box-shadow:0 20px 60px rgba(0,0,0,.25);
+  animation:modalPop .35s ease;
+}
+
+body.dark-mode #ModalSubscribe .modal-content{
+  background:rgba(25,25,25,.95);
+  color:#fff;
+}
+
+/* Smooth pop animation */
+@keyframes modalPop{
+  from{
+    transform:scale(.95);
+    opacity:0;
+  }
+  to{
+    transform:scale(1);
+    opacity:1;
+  }
+}
+
+/* Left image styling */
+#ModalSubscribe img{
+  border-radius:12px;
+  box-shadow:0 10px 30px rgba(0,0,0,.2);
+}
+
+/* Heading */
+#ModalSubscribe h3{
+  font-weight:700;
+  letter-spacing:.5px;
+  margin-bottom:20px;
+}
+
+/* Input fields */
+#ModalSubscribe .form-control{
+  height:48px;
+  border-radius:12px;
+  border:1px solid #ddd;
+  padding:10px 15px;
+  transition:.3s;
+}
+
+#ModalSubscribe .form-control:focus{
+  border-color:#cc1227;
+  box-shadow:0 0 0 3px rgba(204,18,39,.15);
+}
+
+/* Subscribe Button */
+.subscribeBtn{
+  background:linear-gradient(135deg,#ff4d6d,#cc1227);
+  border:none;
+  border-radius:12px;
+  padding:12px;
+  font-weight:600;
+  color:#fff;
+  transition:.3s;
+}
+
+.subscribeBtn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 12px 25px rgba(204,18,39,.35);
+}
+
+.subscribeBtn:disabled{
+  background:#ccc;
+  cursor:not-allowed;
+}
+
+/* OTP status text spacing */
+#otpStatus,
+#otpVerifyStatus{
+  display:block;
+  margin-top:6px;
+  font-size:13px;
+}
+
+/* Close button clean */
+#ModalSubscribe .btn-close{
+  opacity:.7;
+  transition:.2s;
+}
+
+#ModalSubscribe .btn-close:hover{
+  opacity:1;
+}
+
+/* Mobile Design */
+@media (max-width:768px){
+
+  #ModalSubscribe .row{
+    flex-direction:column;
+    text-align:center;
+  }
+
+  #ModalSubscribe img{
+    width:120px;
+    margin-bottom:15px;
+  }
+
+  #ModalSubscribe .modal-content{
+    border-radius:14px;
+  }
+
+}
+</style>
 <!-- Subscribe Modal -->
 <div class="modal fade" id="ModalSubscribe" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
