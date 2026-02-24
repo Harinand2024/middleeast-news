@@ -1,124 +1,269 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block body %}
-<div class="container my-5">
-    <div class="row">
+
+<div class="container middleeast-wrapper my-3">
+
+    <!-- ================= NEWS SECTION ================= -->
+    <h2 class="news-strip">Latest News</h2>
+
+    <div class="row g-4">
         {% for post in posts %}
         <div class="col-lg-3 col-md-6 col-sm-12">
-            <div class="article-card">
-                <div class="image-section">
-                    <a href="/{{ post.slug }}">
-                        <img src="{{ post.post_image.url }}" alt="{{ post.post_title }}" title="{{ post.post_title }}"
-                            loading="lazy" class="post-image" />
-                    </a>
-                    <div class="content-section items_background">
-                        <a href="{% url 'catdetails' catlink=post.post_cat.sub_cat.cat_slug slug=post.post_cat.subcat_slug %}"
-                            class="article-tag">
-                            {{ post.post_cat|truncatechars:30 }}
-                        </a>
-                        <a href="/{{ post.slug }}">
-                            <h3 class="article-heading h2-copy">{{ post.post_title|truncatechars:65 }}</h3>
-                        </a>
+            <div class="middleeast-card">
 
-                        <div class="d-flex align-items-center px-2 my-1 mb-1 meta">
-                            <small><i class="fas fa-calendar-alt"></i> {{post.schedule_date|date}}</small>
-                            <small class="ml-3"><i class="fas fa-clock"></i> {{ post.schedule_date|time }}</small>
-                            <small class="ml-3"><i class="far fa-eye mr-2"></i>{{post.post_status|add:post.viewcounter}}</small>
-                            <div class="ml-3 share-icons-container" style="--custom-bottom: 0px; --custom-right: 0px;">
-                                {% include 'share.html' with posts=post %}
-                            </div>
-                        </div>
+                <div class="middleeast-image">
+                    <a href="/{{ post.slug }}">
+                        <img src="{{ post.post_image.url }}"
+                             alt="{{ post.post_title }}"
+                             loading="lazy">
+                    </a>
+                </div>
+
+                <div class="middleeast-content">
+                    <a href="{% url 'catdetails' catlink=post.post_cat.sub_cat.cat_slug slug=post.post_cat.subcat_slug %}"
+                       class="middleeast-tag">
+                        {{ post.post_cat|truncatechars:24 }}
+                    </a>
+
+                    <a href="/{{ post.slug }}">
+                        <h3 class="middleeast-title">
+                            {{ post.post_title|truncatechars:70 }}
+                        </h3>
+                    </a>
+
+                    <div class="middleeast-meta">
+                        <span><i class="fas fa-calendar-alt"></i> {{post.schedule_date|date}}</span>
+                        <span><i class="fas fa-clock"></i> {{ post.schedule_date|time }}</span>
+                        <span><i class="far fa-eye"></i> {{post.post_status|add:post.viewcounter}}</span>
                     </div>
                 </div>
+
             </div>
         </div>
         {% endfor %}
     </div>
 
-    <div class="pagination my-4 d-flex align-items-center justify-content-center">
-        <nav aria-label="Page navigation">
-            <ul class="pagination justify-content-center">
-                {% if posts.has_previous %}
-                <li class="page-item">
-                    <a class="page-link"
-                        href="?page={{ posts.previous_page_number }}&vpage={{ video.number }}">Previous</a>
-                </li>
-                {% endif %}
+    <!-- NEWS PAGINATION -->
+    <div class="pagination-wrapper">
+        <ul class="pagination">
+            {% if posts.has_previous %}
+            <li><a href="?page={{ posts.previous_page_number }}">Previous</a></li>
+            {% endif %}
 
-                {% for num in posts.paginator.page_range %}
+            {% for num in posts.paginator.page_range %}
                 {% if posts.number == num %}
-                <li class="page-item active"><span class="page-link">{{ num }}</span></li>
-                {% elif num > posts.number|add:'-3' and num < posts.number|add:'3' %} <li class="page-item"><a
-                        class="page-link" href="?page={{ num }}&vpage={{ video.number }}">{{ num }}</a></li>
-                    {% endif %}
-                    {% endfor %}
+                    <li class="active"><span>{{ num }}</span></li>
+                {% elif num > posts.number|add:'-3' and num < posts.number|add:'3' %}
+                    <li><a href="?page={{ num }}">{{ num }}</a></li>
+                {% endif %}
+            {% endfor %}
 
-                    {% if posts.has_next %}
-                    <li class="page-item">
-                        <a class="page-link" href="?page={{ posts.next_page_number }}&vpage={{ video.number }}">Next</a>
-                    </li>
-                    {% endif %}
-            </ul>
-        </nav>
+            {% if posts.has_next %}
+            <li><a href="?page={{ posts.next_page_number }}">Next</a></li>
+            {% endif %}
+        </ul>
     </div>
 
 
-    <div class="row">
+    <!-- ================= VIDEO SECTION ================= -->
+    <h2 class="news-strip my-3">Latest Videos</h2>
+
+    <div class="row g-4">
         {% for post in video %}
         <div class="col-lg-3 col-md-6 col-sm-12">
-            <div class="article-card">
-                <div class="image-section">
+            <div class="middleeast-card">
+
+                <div class="middleeast-image video-thumb">
                     <a href="/video/{{post.slug}}">
                         <img src="https://img.youtube.com/vi/{{post.video_url}}/hqdefault.jpg"
-                            alt="{{post.video_title}}" title="{{post.video_title}}" loading="lazy" />
+                             alt="{{post.video_title}}"
+                             loading="lazy">
+                        <span class="play-icon"><i class="fas fa-play"></i></span>
                     </a>
-                    <div class="content-section items_background">
-                        <a href="{% url 'catdetails' catlink=post.News_Category.sub_cat.cat_slug slug=post.News_Category.subcat_slug %}"
-                            class="article-tag">
-                            {{ post.News_Category|truncatechars:30 }}
-                        </a>
-                        <a href="/{{ post.slug }}">
-                            <h3 class="article-heading h2-copy">{{ post.video_title|truncatechars:65 }}</h3>
-                        </a>
+                </div>
 
-                        <div class="d-flex align-items-center px-2 my-1 mb-1 meta">
-                            <small><i class="fas fa-calendar-alt"></i> {{post.schedule_date|date}}</small>
-                            <small class="ml-3"><i class="fas fa-clock"></i> {{ post.schedule_date|time }}</small>
-                            <small class="ml-3"><i class="far fa-eye mr-2"></i>{{post.post_status|add:post.viewcounter}}</small>
-                        </div>
+                <div class="middleeast-content">
+                    <a href="{% url 'catdetails' catlink=post.News_Category.sub_cat.cat_slug slug=post.News_Category.subcat_slug %}"
+                       class="middleeast-tag">
+                        {{ post.News_Category|truncatechars:24 }}
+                    </a>
+
+                    <a href="/video/{{ post.slug }}">
+                        <h3 class="middleeast-title">
+                            {{ post.video_title|truncatechars:70 }}
+                        </h3>
+                    </a>
+
+                    <div class="middleeast-meta">
+                        <span><i class="fas fa-calendar-alt"></i> {{post.schedule_date|date}}</span>
+                        <span><i class="fas fa-clock"></i> {{ post.schedule_date|time }}</span>
+                        <span><i class="far fa-eye"></i> {{post.post_status|add:post.viewcounter}}</span>
                     </div>
                 </div>
+
             </div>
         </div>
         {% endfor %}
-    </div>
-
-    <div class="pagination my-4 d-flex align-items-center justify-content-center">
-        <nav aria-label="Page navigation">
-            <ul class="pagination justify-content-center">
-                {% if video.has_previous %}
-                <li class="page-item">
-                    <a class="page-link"
-                        href="?vpage={{ video.previous_page_number }}&page={{ posts.number }}">Previous</a>
-                </li>
-                {% endif %}
-
-                {% for num in video.paginator.page_range %}
-                {% if video.number == num %}
-                <li class="page-item active"><span class="page-link">{{ num }}</span></li>
-                {% elif num > video.number|add:'-3' and num < video.number|add:'3' %} <li class="page-item"><a
-                        class="page-link" href="?vpage={{ num }}&page={{ posts.number }}">{{ num }}</a></li>
-                    {% endif %}
-                    {% endfor %}
-
-                    {% if video.has_next %}
-                    <li class="page-item">
-                        <a class="page-link" href="?vpage={{ video.next_page_number }}&page={{ posts.number }}">Next</a>
-                    </li>
-                    {% endif %}
-            </ul>
-        </nav>
     </div>
 
 </div>
+
+
+<style>
+
+/* ================= SECTION TITLE ================= */
+
+.section-title{
+    font-size:22px;
+    font-weight:700;
+    margin-bottom:25px;
+    position:relative;
+}
+
+.section-title::after{
+    content:"";
+    width:60px;
+    height:3px;
+    background:#cc1227;
+    display:block;
+    margin-top:8px;
+}
+
+/* ================= CARD ================= */
+
+.middleeast-card{
+    background:#fff;
+    border-radius:14px;
+    overflow:hidden;
+    border:1px solid #eee;
+    transition:.3s ease;
+    height:100%;
+}
+
+.middleeast-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 12px 30px rgba(0,0,0,.08);
+}
+
+/* Image */
+.middleeast-image{
+    position:relative;
+    overflow:hidden;
+}
+
+.middleeast-image img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+    transition:transform .5s ease;
+}
+
+.middleeast-card:hover .middleeast-image img{
+    transform:scale(1.05);
+}
+
+/* Play Icon */
+.video-thumb .play-icon{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    background:rgba(0,0,0,.6);
+    color:#fff;
+    width:45px;
+    height:45px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    font-size:14px;
+}
+
+/* Content */
+.middleeast-content{
+    padding:18px 20px 22px;
+}
+
+/* Tag */
+.middleeast-tag{
+    font-size:11px;
+    font-weight:600;
+    color:#cc1227 !important;
+    text-transform:uppercase;
+    letter-spacing:.5px;
+    text-decoration:none;
+}
+
+/* Title */
+.middleeast-title{
+    font-size:17px;
+    font-weight:700;
+    line-height:1.4;
+    margin:10px 0 12px;
+    color:#111;
+}
+
+.middleeast-title:hover{
+    color:#cc1227;
+}
+
+/* Meta */
+.middleeast-meta{
+    font-size:12px;
+    color:#777;
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+}
+
+/* ================= PAGINATION ================= */
+
+.pagination-wrapper{
+    margin-top:30px;
+    display:flex;
+    justify-content:center;
+}
+
+.pagination{
+    list-style:none;
+    display:flex;
+    gap:6px;
+    padding:0;
+}
+
+.pagination li a,
+.pagination li span{
+    padding:6px 12px;
+    border:1px solid #eee;
+    border-radius:4px;
+    text-decoration:none;
+    color:#333;
+}
+
+.pagination li.active span{
+    background:#111;
+    color:#fff;
+    border-color:#111;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width:992px){
+    .middleeast-image img{
+        height:200px;
+    }
+}
+
+@media (max-width:576px){
+    .middleeast-image img{
+        height:180px;
+    }
+    .middleeast-title{
+        font-size:15px;
+    }
+}
+
+</style>
+
 {% endblock %}

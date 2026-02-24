@@ -1,16 +1,18 @@
 {% load static %}
 
-<footer class="desh-footer">
+<footer class="desh-footer"
+{% if profile_setting.footer_img %}
+style="background-image: url('{{ profile_setting.footer_img.url }}');"
+{% endif %}>
 
   <div class="container py-5">
     <div class="row g-4">
 
       <!-- ABOUT -->
       <div class="col-lg-4 col-md-6">
-        <h5 class="footer-title">About MiddleEastBulletin</h5>
+        <h5 class="footer-title">About Middle East Bulletin</h5>
         <div class="footer-text mt-3">
-            <p>
-            Middle East Bulletin is an independent, region-based global news platform delivering accurate, real-time reporting from the heart of the Middle East to audiences worldwide.</p>
+            
             <p>Middle East Bulletin is an independent, region-based global news platform delivering accurate, real-time reporting from the heart of the Middle East to audiences worldwide. </p>
             <p>With on-ground correspondents, international contributors, and strategic event partnerships, we cover politics, economy, security, technology, culture, and global affairs with integrity and speed. </p>
             <p>Trusted by readers across continents, Middle East Bulletin connects regional insight with global impact — bringing the Middle East to the world with clarity, credibility, and authority.</p>
@@ -123,11 +125,48 @@
 <style>
     /* ===== FOOTER BASE ===== */
 .desh-footer{
-    background: linear-gradient(to right, #0c1f1a, #265b3b, #1c1c1c);
+    background-color: #0c1f1a; /* fallback */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    /* gradient overlay */
+    position: relative;
     color:#f5f5f5;
     font-size:14px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
 }
 
+.desh-footer::before{
+    content: "";
+    position: absolute;
+    inset: 0;
+     background: linear-gradient(
+        to right,
+        rgba(10,25,20,0.88),
+        rgba(20,60,40,0.85),
+        rgba(15,15,15,0.92)
+    );
+    z-index: 0;
+}
+
+.desh-footer > *{
+    position: relative;
+    z-index: 1;
+}
+.desh-footer h4{
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}
+.desh-footer a{
+    color: #e0e0e0;
+    transition: all 0.3s ease;
+}
+
+.desh-footer a:hover{
+    color: #00c389;   /* Middle East green */
+    padding-left: 4px;
+}
 /* TITLES */
 .footer-title{
     color:#fff;
@@ -200,9 +239,10 @@
 
 /* BOTTOM BAR */
 .footer-bottom{
-    background:rgba(0,0,0,0.25);
+    background: rgba(0,0,0,0.35);
+    border-top: 1px solid rgba(255,255,255,0.1);
     padding:15px 0;
-    margin-top:30px;
+    
 }
 
 /* SOCIAL */

@@ -2,20 +2,21 @@
 {% block body %}
 {% load static %}
 {% load image_filters %}
-<!-- <link rel="stylesheet" href="{% static 'assets/category/css/vendor/bootstrap.min.css' %}">
-<link rel="stylesheet" href="{% static 'assets/category/css/vendor/font-awesome.css' %}">
-<link rel="stylesheet" href="{% static 'assets/category/css/vendor/icon-font.css' %}">
-<link rel="stylesheet" href="{% static 'assets/category/css/vendor/remixicon.css' %}"> -->
+
 <link rel="stylesheet" href="{% static 'assets/category/css/app.css' %}">
 <link rel="stylesheet" href="{% static 'assets/category/css/responsive.css' %}">
 
+<div class="meb-pro-layout">
+
 <div id="main-wrapper" class="main-wrapper">
-    
+
+    <!-- ================= HERO SECTION ================= -->
     {% if BlogData %}
-    <section class="blog-hero-area mb-3 mt-30">
+    <section class="blog-hero-area mb-5">
         <div class="container">
-            <h1 class="news-strip">Top Stories and Breaking News in {{ request.path|slice:"1:" }}</h1> 
-            
+            <h1 class="news-strip meb-heading">
+                Top Stories and Breaking News in {{ request.path|slice:"1:" }}
+            </h1>
             <div class="row">
                 <div class="col-lg-3">
                     {% for Blog in BlogData|slice:"0:3" %}
@@ -180,8 +181,8 @@
     <section class="articles-grid-section my-5">
         <div class="container">
             <div class="mb-3">
-                <div class="section-title">Latest News</div>
-                <div class="double-underline"></div>
+                <div class="news-strip">Latest News</div>
+                
             </div>
             <div class="row">
                 {% for Blog in latestnews|slice:":4"%}
@@ -236,8 +237,8 @@
         <div class="container">
             <!-- 🔹 Section Title -->
             <div class="mb-4 text-center text-lg-start">
-            <div class="section-title fw-bold fs-4">Trending News</div>
-            <div class="double-underline mx-auto mx-lg-0"></div>
+            <div class="news-strip">Trending News</div>
+            
             </div>
 
             <div class="row g-4">
@@ -456,8 +457,8 @@
     <section class="popular-posts-column-area mt-60 mb-35">
         <div class="container">
             <div class="mb-3">
-                <div class="section-title">Articles</div>
-                <div class="double-underline"></div>
+                <div class="news-strip">Articles</div>
+                
             </div>
             <div class="row">
                 {% for Blog in Articale|slice:":6"%}
@@ -546,87 +547,186 @@
 <script src="{% static 'assets/category/js/app.js' %}"></script>
 
 <style>
-    .video-section{
-        background: linear-gradient(135deg, 
-        #ff304f 0%, 
-        #d4142a 35%, 
-        #a10e1e 70%, 
-        #7a0b17 100%
-    ) !important
-    }
-    .post-block-style-wrapper .post-block-media-wrap a img {
-        transition: .35s ease-in;
-        display: block;
-        overflow: hidden;
-        width: 100%;
-       
-    }
-    .post-title {
-        font-size: 22px !important;
-        line-height: 19px;
-        font-weight: bold;
-    }
 
-    .post-block-style-wrapper .post-block-content-wrap .post-excerpt-box p,
-    .post-bottom-meta {
-        color: inherit !important;
-    }
-    .post-bottom-meta{
-        justify-content: inherit !important;
-        gap: 10px !important;
-        font-size: 11px !important;
-    }
-    .blog-pagination-area ul.page-numbers li span.page-numbers {
-    color: #cc1227 !important;
-    border-color: #cc1227 !important;
+/* ===============================
+   MEB PROFESSIONAL CATEGORY STYLE
+   Fully Scoped – No Conflict
+================================= */
+
+.meb-pro-layout{
+  padding:50px 0;
 }
 
-/* 🎨 Base Design */
-.video-card {
-  background: #111;
-  transition: all 0.3s ease;
-  border: 1px solid rgba(255,255,255,0.05);
-}
-.video-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 16px rgba(255, 255, 255, 0.08);
-}
+/* -------- SECTION TITLES -------- */
 
-/* 🖼️ Thumbnail */
-.video-thumb {
-  height: 180px;
-  object-fit: cover;
-  border-bottom: 2px solid #cc1227;
-  transition: all 0.4s ease;
-}
-.video-card:hover .video-thumb {
-  transform: scale(1.05);
-  filter: brightness(0.8);
-}
-
-/* ▶ Overlay Play Button */
-.video-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.3);
-  opacity: 0;
-  transition: all 0.3s ease;
-}
-.video-card:hover .video-overlay {
-  opacity: 1;
+.meb-pro-layout .news-strip,
+.meb-pro-layout .news-strip{
+  font-size:28px;
+  font-weight:800;
+  margin-bottom:25px;
+  position:relative;
 }
 
 
 
-/* 📱 Responsive Fixes */
-@media (max-width: 768px) {
-  .video-thumb {
-    height: 150px;
+/* -------- CARD DESIGN -------- */
+
+.meb-pro-layout .post-block-style-wrapper{
+  border-radius:14px;
+  overflow:hidden;
+  border:1px solid #eee;
+  transition:.3s ease;
+  background:#fff;
+  margin-bottom:25px;
+}
+
+.meb-pro-layout .post-block-style-wrapper:hover{
+  transform:translateY(-4px);
+  box-shadow:0 15px 35px rgba(0,0,0,.06);
+}
+
+/* -------- IMAGE -------- */
+
+.meb-pro-layout .post-block-media-wrap img{
+  width:100%;
+  height:230px;
+  object-fit:cover;
+  transition:.4s ease;
+}
+
+.meb-pro-layout .post-block-style-wrapper:hover img{
+  transform:scale(1.06);
+}
+
+/* -------- CONTENT -------- */
+
+.meb-pro-layout .card-bg-dark{
+  background:#fff !important;
+  padding:18px;
+}
+
+.meb-pro-layout .post-title{
+  font-size:18px !important;
+  font-weight:700;
+  line-height:1.5;
+}
+
+.meb-pro-layout .post-title a{
+  color:#111 !important;
+  text-decoration:none;
+}
+
+.meb-pro-layout .post-title a:hover{
+  color:#cc1227 !important;
+}
+
+.meb-pro-layout .post-excerpt-box p{
+  font-size:14px;
+  color:#666;
+  line-height:1.6;
+}
+
+/* -------- META -------- */
+
+.meb-pro-layout .post-bottom-meta{
+  font-size:12px !important;
+  color:#777 !important;
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:10px;
+}
+
+/* -------- PAGINATION -------- */
+
+.meb-pro-layout .page-numbers{
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  padding:0;
+  list-style:none;
+}
+
+.meb-pro-layout .page-numbers li a,
+.meb-pro-layout .page-numbers li span{
+  padding:8px 14px;
+  border-radius:6px;
+  border:1px solid #eee;
+  font-size:14px;
+  text-decoration:none;
+  transition:.3s;
+}
+
+.meb-pro-layout .page-numbers li a{
+  color:#333;
+  background:#fff;
+}
+
+.meb-pro-layout .page-numbers li a:hover{
+  background:#cc1227;
+  color:#fff;
+  border-color:#cc1227;
+}
+
+.meb-pro-layout .page-numbers li span.current{
+  background:#cc1227;
+  color:#fff;
+  border-color:#cc1227;
+}
+
+/* -------- VIDEO SECTION -------- */
+
+.meb-pro-layout .video-section{
+  background:linear-gradient(135deg,#111,#2b2b2b);
+  border-radius:16px;
+}
+
+.meb-pro-layout .video-card{
+  background:#1a1a1a;
+  border-radius:12px;
+  overflow:hidden;
+  transition:.3s;
+}
+
+.meb-pro-layout .video-card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 10px 25px rgba(0,0,0,.3);
+}
+
+.meb-pro-layout .video-thumb{
+  height:190px;
+  object-fit:cover;
+  transition:.4s;
+}
+
+.meb-pro-layout .video-card:hover .video-thumb{
+  transform:scale(1.05);
+  filter:brightness(.8);
+}
+
+/* -------- RESPONSIVE -------- */
+
+@media(max-width:992px){
+  .meb-pro-layout .post-block-media-wrap img{
+    height:200px;
   }
-  .video-card h6 {
-    font-size: 14px;
+}
+
+@media(max-width:768px){
+  .meb-pro-layout .post-block-media-wrap img{
+    height:170px;
+  }
+  .meb-pro-layout .post-title{
+    font-size:16px !important;
   }
 }
+
+@media(max-width:576px){
+  .meb-pro-layout .post-block-media-wrap img{
+    height:150px;
+  }
+}
+
 </style>
 
 {% endblock %}
