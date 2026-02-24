@@ -2,13 +2,598 @@
 {% block body %}
 {% load static %}
 
-<div class="container py-4 card-bg-dark">
-    {% if page.pageimage %}
-      <img src="{{ page.pageimage.url }}" alt="{{ page.pagename }}" style="width: 100%;" class="img-fluid width: 100%; mb-3">
-    {% endif %}
-    <div>
-      {{ page.Content|safe }}
-    </div>
-</div>
+<div class="container legal-layout">
 
+  <div class="row">
+
+    <!-- LEFT SIDEBAR -->
+    <div class="col-lg-3 col-md-12  legal-sidebar">
+
+      <h5 class="sidebar-title">Inside Middle East</h5>
+
+      <ul class="legal-menu">
+        <li>
+          <a href="{% url 'cms' 'about' %}"
+            class="{% if page and page.slug == 'about' %}active{% endif %}">
+            About
+          </a>
+        </li>
+         <li>
+          <a href="{% url 'cms' 'data-policy' %}"
+            class="{% if page and page.slug == 'data-policy' %}active{% endif %}">
+            Data Policy
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'cms' 'privacy-policy' %}"
+            class="{% if page and page.slug == 'privacy-policy' %}active{% endif %}">
+            Privacy Policy
+          </a>
+        </li>
+          <li>
+          <a href="{% url 'cms' 'content-policy' %}"
+            class="{% if page and page.slug == 'content-policy' %}active{% endif %}">
+            Content Policy
+          </a>
+        </li>
+
+        <li>
+          <a href="{% url 'cms' 'official-statement' %}"
+            class="{% if page and page.slug == 'official-statement' %}active{% endif %}">
+            Official Statement
+          </a>
+        </li>
+
+        <li>
+          <a href="{% url 'cms' 'collaboration-partnership-policy' %}"
+            class="{% if page and page.slug == 'collaboration-partnership-policy' %}active{% endif %}">
+            Collaboration & Partnership Policy
+          </a>
+        </li>
+
+        <li>
+          <a href="{% url 'cms' 'press-release-submission-guidelines' %}"
+            class="{% if page and page.slug == 'press-release-submission-guidelines' %}active{% endif %}">
+            Press Release Submission Guidelines
+          </a>
+        </li>
+
+     
+      </ul>
+
+    </div>
+
+
+    <!-- RIGHT CONTENT -->
+    <div class="col-lg-9 col-md-12 legal-content">
+
+      {% if page.pageimage %}
+        <img src="{{ page.pageimage.url }}" class="img-fluid mb-4 w-100">
+      {% endif %}
+
+      <div class="ck-content-wrapper">
+        {{ page.Content|safe }}
+      </div>
+
+    </div>
+
+  </div>
+</div>
+<style>
+  /* ================= LEGAL LAYOUT ================= */
+
+.legal-layout{
+  padding:20px 0px;
+}
+
+/* SIDEBAR */
+
+.legal-sidebar{
+  border-right:1px solid #eee;
+  padding:20px;
+  min-height:100vh;
+  background:#fff;
+}
+
+.sidebar-title{
+  font-weight:700;
+  margin-bottom:25px;
+}
+
+.legal-menu{
+  list-style:none;
+  padding:0;
+}
+
+.legal-menu li{
+  margin-bottom:12px;
+}
+
+.legal-menu a{
+  text-decoration:none;
+  color:#333;
+  font-weight:500;
+  display:block;
+  padding:8px 12px;
+  border-radius:6px;
+  transition:all .2s ease;
+}
+
+.legal-menu a:hover{
+  background:#f1f1f1;
+  color:#cc1227;
+}
+
+.legal-menu a.active{
+  background:#cc1227;
+  color:#fff !important;
+}
+
+/* RIGHT CONTENT */
+
+.legal-content{
+  padding:20px 40px;
+  background: #fff;
+}
+
+/* CKEditor Styling */
+
+.ck-content-wrapper h2,
+.ck-content-wrapper h3{
+  font-weight:700;
+}
+
+.ck-content-wrapper h2::after,
+.ck-content-wrapper h3::after{
+  content:"";
+  width:50px;
+  height:3px;
+  background:#cc1227;
+  display:block;
+  margin-top:8px;
+}
+
+.ck-content-wrapper p{
+  font-size:16px;
+  line-height:1.8;
+  color:#fff;
+  margin-bottom:18px;
+}
+
+.ck-content-wrapper ul{
+  padding-left:20px;
+  margin-bottom:20px;
+}
+
+.ck-content-wrapper ul li{
+  margin-bottom:8px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:992px){
+
+  .legal-sidebar{
+    min-height:auto;
+    border-right:none;
+    border-bottom:1px solid #eee;
+  }
+
+}
+
+@media(max-width:768px){
+
+  .legal-layout{
+    padding-top:20px;
+  }
+
+  .legal-content{
+    padding:20px;
+  }
+
+  .legal-menu{
+    display:flex;
+    overflow-x:auto;
+    gap:10px;
+  }
+
+  .legal-menu li{
+    flex:0 0 auto;
+  }
+
+  .legal-menu a{
+    white-space:nowrap;
+  }
+
+}
+  /* ================= ABOUT PAGE ================= */
+
+.about-hero{
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c7744);
+  color: #fff;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.about-hero h1{
+  font-size: 42px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.about-tagline{
+  font-size: 18px;
+  color: #ccc;
+}
+
+.about-content{
+  padding: 60px 20px;
+  max-width: 1100px;
+}
+
+.about-section{
+  margin: 20px 1px;
+}
+
+.about-section h2{
+  font-size: 26px;
+  margin-bottom: 18px;
+  position: relative;
+}
+
+.about-section h2::after{
+  content: "";
+  width: 60px;
+  height: 3px;
+  background: #cc1227;
+  display: block;
+  margin-top: 8px;
+}
+
+.about-section p{
+  font-size: 14px;
+  line-height: 22px;
+  color: #333;
+}
+
+/* Highlight Box */
+.highlight-box{
+  background: #f9f9f9;
+  padding: 35px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.05);
+}
+
+.highlight-box ul{
+  padding-left: 20px;
+}
+
+.highlight-box li{
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+/* Mission Vision */
+.mission-vision{
+  display: flex;
+  gap: 30px;
+  margin-bottom: 60px;
+}
+
+.mission-card,
+.vision-card{
+  flex: 1;
+  padding: 35px;
+  border-radius: 12px;
+  background: #111;
+  color: #fff;
+  box-shadow: 0 15px 40px rgba(0,0,0,.2);
+}
+
+.mission-card h2,
+.vision-card h2{
+  margin-bottom: 15px;
+}
+
+.mission-card p,
+.vision-card p{
+  color: #ddd;
+  line-height: 1.7;
+}
+
+/* Connect Box */
+.connect-box{
+  text-align: center;
+  padding: 40px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #cc1227, #7a0c1a);
+  color: #fff;
+}
+
+.connect-box h2{
+  color: #fff;
+}
+
+.connect-box p{
+  color: #fff;
+}
+
+.brand-line{
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+
+/* ================= POLICY PAGE ================= */
+
+.policy-hero{
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c7744);
+  color:#fff;
+  padding:40px 20px;
+  text-align:center;
+}
+
+.policy-hero h1{
+  font-size:40px;
+  font-weight:700;
+}
+
+.policy-tagline{
+  color:#ccc;
+  font-size:18px;
+}
+
+.policy-content{
+  
+  padding:30px 20px;
+}
+
+.policy-section{
+  margin-bottom:55px;
+}
+
+.policy-section h2{
+  font-size:24px;
+  margin-bottom:15px;
+  position:relative;
+}
+
+.policy-section h2::after{
+  content:"";
+  width:60px;
+  height:3px;
+  background:#cc1227;
+  display:block;
+  margin-top:8px;
+}
+
+.policy-section p{
+  font-size:16px;
+  line-height:1.8;
+  color:#333;
+}
+
+/* List Styling */
+.styled-list{
+  padding-left:20px;
+  margin-top:15px;
+}
+
+.styled-list li{
+  margin-bottom:10px;
+  line-height:1.7;
+}
+
+/* Highlight Box */
+.highlight-box{
+  background:#f9f9f9;
+  padding:35px;
+  border-radius:12px;
+  box-shadow:0 10px 30px rgba(0,0,0,.05);
+}
+
+/* Submit Box */
+.submit-box{
+  background:#fff;
+  border-left:4px solid #cc1227;
+  padding:25px;
+  border-radius:8px;
+  margin-top:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,.05);
+}
+
+.email-highlight{
+  font-weight:600;
+  font-size:18px;
+  color:#cc1227;
+}
+
+/* Final Section */
+.final-commitment{
+  background:linear-gradient(135deg,#cc1227,#7a0c1a);
+  padding:40px;
+  border-radius:14px;
+  color:#fff;
+}
+
+.final-commitment h2{
+  color:#fff;
+}
+
+.final-commitment p{
+  color:#fff;
+}
+/* Mission Highlight */
+.mission-highlight{
+  margin-top: 25px;
+  padding: 25px;
+  background: linear-gradient(135deg,#cc1227,#7a0c1a);
+  color:#fff;
+  border-radius:12px;
+  font-size:18px;
+  font-weight:600;
+  text-align:center;
+  box-shadow:0 15px 40px rgba(0,0,0,.15);
+}
+
+/* Pillars */
+.pillar{
+  margin-bottom:25px;
+}
+
+.pillar h4{
+  font-size:18px;
+  font-weight:600;
+  margin-bottom:8px;
+}
+
+.pillar p{
+  margin:0;
+  color:#444;
+}
+/* Requirement blocks */
+.requirement-block{
+  margin-bottom:25px;
+}
+
+.requirement-block h4{
+  font-size:17px;
+  font-weight:600;
+  margin-bottom:8px;
+}
+
+/* Email highlight already exists */
+.email-highlight{
+  font-size:18px;
+  font-weight:600;
+  color:#cc1227;
+}
+
+/* Responsive */
+@media(max-width:768px){
+
+  .about-hero h1{
+    font-size: 28px;
+  }
+
+  .mission-vision{
+    flex-direction: column;
+  }
+
+  .about-section p{
+    font-size: 15px;
+  }
+ .mission-highlight{
+    font-size:16px;
+    padding:20px;
+  }
+   .policy-hero h1{
+    font-size:28px;
+  }
+
+  .policy-section p{
+    font-size:15px;
+  }
+
+  .highlight-box,
+  .submit-box,
+  .final-commitment{
+    padding:25px;
+  }
+}
+/* ================= FULL RESPONSIVE ENHANCEMENT ================= */
+
+/* Improve overall spacing */
+.legal-layout{
+  padding:30px 15px;
+}
+
+/* Make sidebar sticky on desktop */
+@media (min-width: 992px){
+  .legal-sidebar{
+    position: sticky;
+    top: 100px;
+    height: fit-content;
+  }
+}
+
+/* Tablet Layout */
+@media (max-width: 992px){
+
+  .legal-sidebar{
+    min-height:auto;
+    border-right:none;
+    border-bottom:1px solid #eee;
+    padding:15px;
+  }
+
+  /* Horizontal Scroll Menu */
+  .legal-menu{
+    display:flex;
+    gap:10px;
+    overflow-x:auto;
+    padding-bottom:10px;
+  }
+
+  .legal-menu::-webkit-scrollbar{
+    height:4px;
+  }
+
+  .legal-menu::-webkit-scrollbar-thumb{
+    background:#cc1227;
+    border-radius:10px;
+  }
+
+  .legal-menu li{
+    flex:0 0 auto;
+    margin-bottom:0;
+  }
+
+  .legal-menu a{
+    white-space:nowrap;
+    font-size:14px;
+    padding:8px 14px;
+    border-radius:30px;
+    background:#f3f3f3;
+  }
+
+  .legal-menu a.active{
+    background:#cc1227;
+    color:#fff !important;
+  }
+
+  .legal-content{
+    padding:25px;
+  }
+}
+
+/* Mobile Layout */
+@media (max-width: 576px){
+
+  .legal-layout{
+    padding:15px 10px;
+  }
+
+  .legal-content{
+    padding:20px 15px;
+  }
+
+  .sidebar-title{
+    font-size:16px;
+  }
+
+  .ck-content-wrapper h2{
+    font-size:20px;
+  }
+
+  .ck-content-wrapper h3{
+    font-size:18px;
+  }
+
+  .ck-content-wrapper p{
+    font-size:14px;
+  }
+
+}
+</style>
 {% endblock %}

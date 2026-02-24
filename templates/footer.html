@@ -6,20 +6,20 @@
     <div class="row g-4">
 
       <!-- ABOUT -->
-      <div class="col-lg-3 col-md-6">
+      <div class="col-lg-4 col-md-6">
         <h5 class="footer-title">About MiddleEastBulletin</h5>
-        <p class="footer-text mt-3">
-          <strong>MiddleEastBulletin — Global Perspective. Trusted Journalism.</strong><br><br>
-          A digital news platform committed to truthful, responsible, and independent journalism,
-          with a strong focus on the Middle East and global affairs.
-          From regional developments to international narratives,
-          delivering accurate and impactful news — without sensationalism.
-        </p>
+        <div class="footer-text mt-3">
+            <p>
+            Middle East Bulletin is an independent, region-based global news platform delivering accurate, real-time reporting from the heart of the Middle East to audiences worldwide.</p>
+            <p>Middle East Bulletin is an independent, region-based global news platform delivering accurate, real-time reporting from the heart of the Middle East to audiences worldwide. </p>
+            <p>With on-ground correspondents, international contributors, and strategic event partnerships, we cover politics, economy, security, technology, culture, and global affairs with integrity and speed. </p>
+            <p>Trusted by readers across continents, Middle East Bulletin connects regional insight with global impact — bringing the Middle East to the world with clarity, credibility, and authority.</p>
 
-        <p class="footer-text mt-3">
-          <strong>Email:</strong> {{ profile_setting.email }}<br>
-          <strong>Address:</strong> {{ profile_setting.main_office_address }}
-        </p>
+          <p>
+            <strong>Email:</strong> {{ profile_setting.email }}<br>
+            <strong>Address:</strong> {{ profile_setting.main_office_address }}
+          </p>
+        </div>
       </div>
 
       <!-- POPULAR ARTICLES -->
@@ -53,7 +53,7 @@
       </div>
 
       <!-- USEFUL LINKS -->
-      <div class="col-lg-3 col-md-6">
+      <div class="col-lg-2 col-md-6">
         <h5 class="footer-title">Useful Links</h5>
         <ul class="footer-links mt-3">
           <li><a href="/">Home</a></li>
@@ -79,7 +79,7 @@
     <div class="container d-flex justify-content-between align-items-center flex-wrap">
 
       <div class="text-white small">
-        © {{ now|date:"Y" }} middleeastbulletin. All Rights Reserved.
+        © {{ now|date:"Y" }} 2026 Middle East Bulletin. All Rights Reserved.
       </div>
 
       <div class="footer-social">
@@ -152,6 +152,12 @@
 .footer-text{
     color:#cbd5e1;
     line-height:1.6;
+    
+}
+.footer-text p{
+    color:#cbd5e1;
+    line-height:1.6;
+    
 }
 
 /* LISTS */
@@ -167,7 +173,7 @@
 }
 
 .footer-list li a{
-    color:#fff !important;
+    color:#cbd5e1 !important;
     font-weight:500;
     display:block;
     text-decoration: none !important;
